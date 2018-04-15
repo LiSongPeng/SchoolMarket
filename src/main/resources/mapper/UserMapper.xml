@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solar.mapper.UserMapper">
+    <resultMap id="userMap" type="User">
+        <id property="id" column="id"/>
+        <result property="uName" column="uName"/>
+        <result property="uPassword" column="uPassword"/>
+        <result property="deleteStatus" column="deleteStatus"/>
+        <result property="uDescription" column="uDescription"/>
+        <!--<result property="createUserId" column="createUserId"/>-->
+        <result property="createTime" column="createTime"/>
+        <result property="uLastOnLine" column="uLastOnLine"/>
+        <association property="createUser" javaType="User">
+            <id property="id" column="crtuId"/>
+            <result property="uName" column="crtuName"/>
+        </association>
+        <collection property="roles" ofType="Role">
+            <id property="id" column="rid"/>
+            <result property="rName" column="rName"/>
+            <result property="rDescription" column="rDescription"/>
+            <result property="createTime" column="rcreateTime"/>
+        </collection>
+    </resultMap>
+</mapper>
