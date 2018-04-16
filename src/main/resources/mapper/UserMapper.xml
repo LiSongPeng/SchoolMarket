@@ -21,4 +21,18 @@
         SELECT * FROM user WHERE user.password=#{password}
         AND user.phone=#{phoneOrEmail} OR user.email=#{phoneOrEmail}
     </select>
+    <select id="queryPassword" resultType="java.lang.String">
+        SELECT user.password FROM user WHERE user.identify=#{identify}
+        AND user.phone=#{phoneOrEmail} OR user.email=#{phoneOrEmail}
+    </select>
+    <update id="updateLastLoginTime">
+        UPDATE user SET user.last_login_time=CURRENT_TIMESTAMP() WHERE user.id=#{id}
+    </update>
+    <select id="querySchools">
+        SELECT * FROM school
+    </select>
+    <insert id="addUser" parameterType="User">
+        INSERT INTO user(id, name, gender, identify, student_id, location, email, phone, password)  VALUES (#{id},#{name},#{gender},#{identify},
+        #{studentID},#{location},#{email},#{phone},#{password})
+    </insert>
 </mapper>

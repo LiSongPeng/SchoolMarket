@@ -7,6 +7,8 @@ import com.solar.vo.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author LiHuiBo
  */
@@ -20,6 +22,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return null;
         }
+        userMapper.updateLastLoginTime(user.getId());
         UserView userView = new UserView();
         userView.setEmail(user.getEmail());
         userView.setGender(user.getGender());
@@ -33,6 +36,21 @@ public class UserServiceImpl implements UserService {
         userView.setStatus(user.getStatus());
         userView.setHeadImg(user.getHeadImg());
         return userView;
+    }
+
+    @Override
+    public String findPassword(String phoneOrEmail, String identify) {
+        return userMapper.queryPassword(phoneOrEmail, identify);
+    }
+
+    @Override
+    public List<String> getSchoolList() {
+        return userMapper.querySchools();
+    }
+
+    @Override
+    public boolean register(User user) {
+        return userMapper.addUser(user) > 0;
     }
 
     @Autowired
