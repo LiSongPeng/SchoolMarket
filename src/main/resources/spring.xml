@@ -8,7 +8,7 @@
     <aop:aspectj-autoproxy/>
     <context:annotation-config/>
     <tx:annotation-driven/>
-    <context:component-scan base-package="com.solar.service,com.solar.mapper"/>
+    <context:component-scan base-package="com.solar.service.impls,com.solar.mapper"/>
     <!--mybatis configuration-->
     <context:property-placeholder location="classpath:config.properties"/>
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">

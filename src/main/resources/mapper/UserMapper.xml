@@ -5,22 +5,20 @@
 <mapper namespace="com.solar.mapper.UserMapper">
     <resultMap id="userMap" type="User">
         <id property="id" column="id"/>
-        <result property="uName" column="uName"/>
-        <result property="uPassword" column="uPassword"/>
-        <result property="deleteStatus" column="deleteStatus"/>
-        <result property="uDescription" column="uDescription"/>
-        <!--<result property="createUserId" column="createUserId"/>-->
-        <result property="createTime" column="createTime"/>
-        <result property="uLastOnLine" column="uLastOnLine"/>
-        <association property="createUser" javaType="User">
-            <id property="id" column="crtuId"/>
-            <result property="uName" column="crtuName"/>
-        </association>
-        <collection property="roles" ofType="Role">
-            <id property="id" column="rid"/>
-            <result property="rName" column="rName"/>
-            <result property="rDescription" column="rDescription"/>
-            <result property="createTime" column="rcreateTime"/>
-        </collection>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="identify" column="identify"/>
+        <result property="studentID" column="student_id"/>
+        <result property="location" column="location"/>
+        <result property="status" column="status"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="registerTime" column="register_time"/>
+        <result property="lastLoginTime" column="last_login_time"/>
+        <result property="password" column="password"/>
     </resultMap>
+    <select id="queryUser" resultMap="userMap">
+        SELECT * FROM user WHERE user.password=#{password}
+        AND user.phone=#{phoneOrEmail} OR user.email=#{phoneOrEmail}
+    </select>
 </mapper>

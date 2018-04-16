@@ -5,14 +5,11 @@
 <!-- 配置管理器 -->
 <configuration>
     <typeAliases>
-        <typeAlias alias="Knowledge" type="com.zh.framework.entity.Knowledge"/>
-        <typeAlias alias="User" type="com.zh.framework.entity.User"/>
-        <typeAlias type="com.zh.framework.entity.Resource" alias="Resource"/>
-        <typeAlias type="com.zh.framework.entity.Role" alias="Role"/>
+        <typeAlias alias="User" type="com.solar.entity.User"/>
     </typeAliases>
-    <typeHandlers>
+<!--    <typeHandlers>
         <typeHandler handler="com.zh.framework.util.StringBlobHandler"/>
-    </typeHandlers>
+    </typeHandlers>-->
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageInterceptor">
 

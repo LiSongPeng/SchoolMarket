@@ -1,12 +1,11 @@
-package com.solar.entity;
+package com.solar.vo;
 
 import java.util.Date;
 
 /**
  * @author LiHuiBo
  */
-public class User {
-    private String id;
+public class UserView {
     private String name;
     private int gender;
     private String identify;
@@ -17,18 +16,9 @@ public class User {
     private String phone;
     private Date registerTime;
     private Date lastLoginTime;
-    private String password;
     private String headImg;
 
-    public User() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public UserView() {
     }
 
     public String getName() {
@@ -109,14 +99,6 @@ public class User {
 
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getHeadImg() {
