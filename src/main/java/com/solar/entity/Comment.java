@@ -6,11 +6,15 @@ import java.util.Date;
  * @author LiHuiBo
  */
 public class Comment {
+    public static final int UNDER_REVIEW = 1;
+    public static final int REJECTED = 0;
+    public static final int PASSED = 2;
     private String id;
     private String content;
     private Date time;
     private int like;
     private int dislike;
+    private int status;
     private Product product;
     private User user;
 
@@ -71,5 +75,13 @@ public class Comment {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

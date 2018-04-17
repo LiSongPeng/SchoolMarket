@@ -13,6 +13,8 @@ public class Order {
     private int status;
     private User user;
     private Product product;
+    private int price;
+    private int totalPrice;
 
     public Order() {
     }
@@ -71,5 +73,21 @@ public class Order {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solar.mapper.OrderMapper">
+    <resultMap id="orderMap" type="Order">
+        <id property="id" column="id"/>
+        <result property="number" column="number"/>
+        <result property="orderTime" column="order_time"/>
+        <result property="finishTime" column="finish_time"/>
+        <result property="status" column="status"/>
+        <result property="price" column="price"/>
+        <result property="totalPrice" column="total_price"/>
+        <association property="user" column="user_id" resultMap="userMap"/>
+        <association property="product" column="product_id" resultMap="productMap"/>
+    </resultMap>
+    <insert id="addOrder">
+        INSERT INTO order(id, number, user_id, product_id,price,total_price) VALUES (#{id},#{number},
+        #{userId},#{productId},#{price},#{totalPrice})
+    </insert>
+    <update id="dispatchingOrder">
+        UPDATE "order" SET status=2 WHERE id=#{id}
+    </update>
+    <update id="finishOrder">
+        UPDATE "order" SET status=3,finish_time=CURRENT_TIMESTAMP() WHERE id=#{id}
+    </update>
+    <select id="queryOrderByUserId">
+        SELECT * FROM "order" WHERE user_id=#{userId}
+    </select>
+    <select id="queryOrderByUserIdAndStatus">
+        SELECT * FROM "order" WHERE user_id=#{userId} AND status=#{status}
+    </select>
+</mapper>

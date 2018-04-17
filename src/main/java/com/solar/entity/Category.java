@@ -6,7 +6,6 @@ package com.solar.entity;
 public class Category {
     private String id;
     private String name;
-    private Category parent;
 
     public Category() {
     }
@@ -27,11 +26,4 @@ public class Category {
         this.name = name;
     }
 
-    public Category getParent() {
-        return parent;
-    }
-
-    public void setParent(Category parent) {
-        this.parent = parent;
-    }
 }

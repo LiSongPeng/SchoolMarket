@@ -3,8 +3,6 @@ package com.solar.service.interfaces;
 import com.solar.entity.User;
 import com.solar.vo.UserView;
 
-import java.util.List;
-
 /**
  * @author LiHuiBo
  * 用户服务层接口
@@ -29,16 +27,26 @@ public interface UserService {
     String findPassword(String phoneOrEmail, String identify);
 
     /**
-     * 查询学校列表
-     *
-     * @return
-     */
-    List<String> getSchoolList();
-
-    /**
      * 注册业务
+     *
      * @param user 用户实体
      * @return 注册是否成功
      */
     boolean register(User user);
+
+    /**
+     * 给评论点赞
+     *
+     * @param commentId
+     * @return
+     */
+    boolean likeComment(String commentId);
+
+    /**
+     * 给评论踩赞
+     *
+     * @param commentId
+     * @return
+     */
+    boolean disklikeComment(String commentId);
 }

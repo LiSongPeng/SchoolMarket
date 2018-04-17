@@ -18,7 +18,7 @@
 --
 -- Table structure for table `admin`
 --
-CREATE SCHEMA `schoolmarket` DEFAULT CHARACTER SET utf8 ;
+
 DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -143,7 +143,6 @@ DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `id` char(36) NOT NULL,
   `name` varchar(10) NOT NULL,
-  `parent` char(36) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `category_name_uindex` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -173,6 +172,7 @@ CREATE TABLE `comment` (
   `dislike` int(11) DEFAULT '0',
   `product_id` char(36) DEFAULT NULL,
   `user_id` char(36) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT '1' COMMENT '1 审核中 0 未通过 2 通过',
   PRIMARY KEY (`id`),
   KEY `comment_product_fk` (`product_id`),
   KEY `comment_user_fk` (`user_id`),
@@ -191,6 +191,33 @@ LOCK TABLES `comment` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notification` (
+  `id` char(36) NOT NULL,
+  `title` varchar(30) NOT NULL DEFAULT '无标题',
+  `content` tinytext NOT NULL,
+  `target` char(36) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `notification_user_fk` (`target`),
+  CONSTRAINT `notification_user_fk` FOREIGN KEY (`target`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `order`
 --
 
@@ -202,9 +229,11 @@ CREATE TABLE `order` (
   `number` int(11) DEFAULT NULL,
   `order_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `finish_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `status` tinyint(4) DEFAULT NULL COMMENT '1 未付款 2 派送中 3 已完成',
+  `status` tinyint(4) DEFAULT '1' COMMENT '1 未派送 2 派送中 3 已完成',
   `user_id` char(36) DEFAULT NULL,
   `product_id` char(36) DEFAULT NULL,
+  `total_price` int(11) DEFAULT '0',
+  `price` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `order_user_fk` (`user_id`),
   KEY `order_product_fk` (`product_id`),
@@ -263,9 +292,12 @@ CREATE TABLE `product` (
   `type` tinyint(4) DEFAULT '1' COMMENT '1 常规商品 2 二手商品 3拍卖商品',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 销售中 0 禁止销售 2 审核中',
   `number` int(11) DEFAULT NULL COMMENT '库存数量',
+  `publisher` char(36) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_category_fk` (`category_id`),
-  CONSTRAINT `product_category_fk` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+  KEY `product_user_fk` (`publisher`),
+  CONSTRAINT `product_category_fk` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  CONSTRAINT `product_user_fk` FOREIGN KEY (`publisher`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -388,61 +420,6 @@ LOCK TABLES `role_permission` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `school`
---
-
-DROP TABLE IF EXISTS `school`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `school` (
-  `id` char(36) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `city` varchar(20) NOT NULL,
-  `province` varchar(10) NOT NULL,
-  `country` varchar(30) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `school_name_uindex` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `school`
---
-
-LOCK TABLES `school` WRITE;
-/*!40000 ALTER TABLE `school` DISABLE KEYS */;
-/*!40000 ALTER TABLE `school` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `shop`
---
-
-DROP TABLE IF EXISTS `shop`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `shop` (
-  `id` char(36) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `open_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` tinyint(4) DEFAULT NULL COMMENT '1 正常 0 关闭',
-  `owner` char(36) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `shop_user_fk` (`owner`),
-  CONSTRAINT `shop_user_fk` FOREIGN KEY (`owner`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `shop`
---
-
-LOCK TABLES `shop` WRITE;
-/*!40000 ALTER TABLE `shop` DISABLE KEYS */;
-/*!40000 ALTER TABLE `shop` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `shoppingcart`
 --
 
@@ -484,7 +461,6 @@ CREATE TABLE `user` (
   `name` varchar(30) NOT NULL,
   `gender` tinyint(4) DEFAULT '1' COMMENT '1 男 0 女',
   `identify` varchar(30) NOT NULL COMMENT '身份证',
-  `student_id` varchar(20) NOT NULL COMMENT '学号',
   `location` varchar(60) NOT NULL COMMENT '收货地址',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 正常 0 禁用',
   `email` varchar(60) NOT NULL,
@@ -492,7 +468,11 @@ CREATE TABLE `user` (
   `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_login_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `password` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
+  `head_img` varchar(60) NOT NULL DEFAULT '/upload/defaultUserIcon.png',
+  `alipay` varchar(60) DEFAULT NULL COMMENT '支付宝收钱码',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_email_uindex` (`email`),
+  UNIQUE KEY `user_phone_uindex` (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -514,4 +494,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-15 22:01:35
+-- Dump completed on 2018-04-17 16:06:09

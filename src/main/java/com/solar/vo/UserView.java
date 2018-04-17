@@ -6,6 +6,7 @@ import java.util.Date;
  * @author LiHuiBo
  */
 public class UserView {
+    private String id;
     private String name;
     private int gender;
     private String identify;
@@ -17,8 +18,17 @@ public class UserView {
     private Date registerTime;
     private Date lastLoginTime;
     private String headImg;
+    private String alipay;
 
     public UserView() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -107,5 +117,13 @@ public class UserView {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
+    }
+
+    public String getAlipay() {
+        return alipay;
+    }
+
+    public void setAlipay(String alipay) {
+        this.alipay = alipay;
     }
 }

@@ -6,10 +6,15 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="User" type="com.solar.entity.User"/>
+        <typeAlias alias="Category" type="com.solar.entity.Category"/>
+        <typeAlias alias="Notification" type="com.solar.entity.Notification"/>
+        <typeAlias alias="Comment" type="com.solar.entity.Comment"/>
+        <typeAlias alias="Product" type="com.solar.entity.Product"/>
+        <typeAlias alias="Order" type="com.solar.entity.Order"/>
     </typeAliases>
-<!--    <typeHandlers>
-        <typeHandler handler="com.zh.framework.util.StringBlobHandler"/>
-    </typeHandlers>-->
+    <!--    <typeHandlers>
+            <typeHandler handler="com.zh.framework.util.StringBlobHandler"/>
+        </typeHandlers>-->
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageInterceptor">
 

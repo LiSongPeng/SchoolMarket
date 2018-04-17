@@ -7,10 +7,11 @@ import java.util.Date;
  */
 public class User {
     private String id;
+    public static final int NORMAL_STATUS = 1;
+    public static final int DISABLED_STATUS = 0;
     private String name;
     private int gender;
     private String identify;
-    private String studentID;
     private String location;
     private int status;
     private String email;
@@ -19,6 +20,7 @@ public class User {
     private Date lastLoginTime;
     private String password;
     private String headImg;
+    private String alipay;
 
     public User() {
     }
@@ -53,14 +55,6 @@ public class User {
 
     public void setIdentify(String identify) {
         this.identify = identify;
-    }
-
-    public String getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
     }
 
     public String getLocation() {
@@ -125,5 +119,13 @@ public class User {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
+    }
+
+    public String getAlipay() {
+        return alipay;
+    }
+
+    public void setAlipay(String alipay) {
+        this.alipay = alipay;
     }
 }

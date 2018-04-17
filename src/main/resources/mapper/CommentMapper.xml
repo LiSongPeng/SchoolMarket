@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solar.mapper.CommentMapper">
+    <resultMap id="commentMap" type="Comment">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="time" column="time"/>
+        <result property="like" column="like"/>
+        <result property="dislike" column="dislike"/>
+        <association property="product" resultMap="productMap" column="product_id"></association>
+        <association property="user" resultMap="userMap" column="user_id"></association>
+    </resultMap>
+    <insert id="addComment">
+        INSERT INTO comment(id, content, product_id, user_id) VALUES (#{id},#{content},#{productId},#{userId})
+    </insert>
+    <update id="increaseLikeById">
+        UPDATE comment SET "like"="like"+1 WHERE id=#{id};
+    </update>
+    <update id="increaseDislikeById">
+        UPDATE comment SET "dislike"="dislike"+1 WHERE id=#{id};
+    </update>
+</mapper>

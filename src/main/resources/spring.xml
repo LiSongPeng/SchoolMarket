@@ -34,4 +34,9 @@
         <property name="basePackage" value="com.zh.framework.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="maxUploadSizePerFile" value="1048576"></property>
+        <property name="maxUploadSize" value="1048576"></property>
+    </bean>
 </beans>
