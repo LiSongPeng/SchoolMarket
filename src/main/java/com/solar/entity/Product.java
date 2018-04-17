@@ -19,6 +19,7 @@ public class Product {
     private String imgc;
     private String imgd;
     private Category category;
+    private User publisher;
 
     public Product() {
     }
@@ -125,5 +126,13 @@ public class Product {
 
     public void setImgd(String imgd) {
         this.imgd = imgd;
+    }
+
+    public User getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(User publisher) {
+        this.publisher = publisher;
     }
 }

@@ -30,4 +30,8 @@ public interface ProductMapper {
 
     List<Product> queryProductByUserIdAndStatus(@Param("userId") String userId,
                                                 @Param("status") int status);
+
+    List<String> queryProductNameByKeyWord(@Param("keyWord") String keyWord);
+
+    List<Product> queryProductByKeyWord(@Param("keyWord") String keyWord);
 }

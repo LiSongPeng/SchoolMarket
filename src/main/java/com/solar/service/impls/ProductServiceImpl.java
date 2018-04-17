@@ -99,6 +99,21 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.soldOut(id) > 0;
     }
 
+    @Override
+    public List<String> getProductNames(String keyWord) {
+        keyWord = "%" + keyWord + "%";
+        return productMapper.queryProductNameByKeyWord(keyWord);
+    }
+
+    @Override
+    public PageInfo<Product> queryProductByKeyWord(String keyWord, int pageNumber, int pageSize) {
+        keyWord = "%" + keyWord + "%";
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(pageNumber, pageSize);
+        List<Product> list = productMapper.queryProductByKeyWord(keyWord);
+        return new PageInfo<>(list);
+    }
+
     @Autowired
     public void setCategoryMapper(CategoryMapper categoryMapper) {
         this.categoryMapper = categoryMapper;

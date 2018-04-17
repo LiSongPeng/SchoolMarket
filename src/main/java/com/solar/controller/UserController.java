@@ -68,7 +68,7 @@ public class UserController {
     @PostMapping("/register.do")
     public String register(@RequestParam("realName") String realName, @RequestParam("gender") int gender,
                            @RequestParam("identify") String identify, @RequestParam("location") String location, @RequestParam("email") String email
-            , @RequestParam("phone") String phone, @RequestParam("password") String password, MultipartFile headImg, MultipartFile alipay, HttpSession session) {
+            , @RequestParam("phone") String phone, @RequestParam("password") String password, @RequestParam("headImg") MultipartFile headImg, @RequestParam("alipay") MultipartFile alipay, HttpSession session) {
         User user = new User();
         user.setName(realName);
         user.setEmail(email);
@@ -78,7 +78,7 @@ public class UserController {
         LOG.debug("path:" + path);
         String headImgName = headImg.getOriginalFilename();
         LOG.debug("headImg:" + headImgName);
-        String newHeadImgName = UUIDGenerator.getUUID() + headImgName.substring(headImgName.indexOf('.'));
+        String newHeadImgName = path + File.pathSeparator + UUIDGenerator.getUUID() + headImgName.substring(headImgName.indexOf('.'));
         LOG.debug("newheadImgName:" + headImgName);
         File file = new File(newHeadImgName);
         try {

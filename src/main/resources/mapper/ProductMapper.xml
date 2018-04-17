@@ -53,4 +53,10 @@
     <update id="soldOut">
         UPDATE product SET status=3 WHERE id=#{id}/*商品下架*/
     </update>
+    <select id="queryProductTitleByKeyWord">
+        SELECT product.name FROM product WHERE product.name LIKE #{keyWord}
+    </select>
+    <select id="queryProductByKeyWord">
+        SELECT * FROM product WHERE product.name LIKE #{keyWord}
+    </select>
 </mapper>

@@ -41,6 +41,7 @@ public interface ProductService {
 
     /**
      * 添加商品
+     *
      * @param product
      * @return
      */
@@ -48,6 +49,7 @@ public interface ProductService {
 
     /**
      * 查询商品数量
+     *
      * @param id
      * @return
      */
@@ -55,6 +57,7 @@ public interface ProductService {
 
     /**
      * 删除指定商品
+     *
      * @param id
      * @return
      */
@@ -62,6 +65,7 @@ public interface ProductService {
 
     /**
      * 更新商品特定信息
+     *
      * @param id
      * @param number
      * @param price
@@ -72,6 +76,7 @@ public interface ProductService {
 
     /**
      * 根据商品类别查询商品
+     *
      * @param type
      * @param pageNumber
      * @param pageSize
@@ -81,14 +86,16 @@ public interface ProductService {
 
     /**
      * 查询所有商品
-     * @return
+     *
      * @param pageNumber
      * @param pageSize
+     * @return
      */
     PageInfo<Product> queryAll(int pageNumber, int pageSize);
 
     /**
      * 查询特定类别商品
+     *
      * @param categoryId
      * @param pageNumber
      * @param pageSize
@@ -98,6 +105,7 @@ public interface ProductService {
 
     /**
      * 根据商品发布用户和商品状态查询
+     *
      * @param userId
      * @param status
      * @param pageNumber
@@ -108,8 +116,27 @@ public interface ProductService {
 
     /**
      * 下架特定商品
+     *
      * @param id
      * @return
      */
     boolean soldOut(String id);
+
+    /**
+     * 根据关键字模糊查询商品名称
+     *
+     * @param keyWord
+     * @return
+     */
+    List<String> getProductNames(String keyWord);
+
+    /**
+     * 根据关键字模糊查询商品
+     *
+     * @param keyWord
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    PageInfo<Product> queryProductByKeyWord(String keyWord, int pageNumber, int pageSize);
 }
