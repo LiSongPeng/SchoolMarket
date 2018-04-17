@@ -13,7 +13,7 @@
         <association property="user" resultMap="userMap" column="user_id"></association>
     </resultMap>
     <insert id="addComment">
-        INSERT INTO comment(id, content, product_id, user_id) VALUES (#{id},#{content},#{productId},#{userId})
+        INSERT INTO comment(id, content, product_id, user_id,level) VALUES (#{id},#{content},#{productId},#{userId},#{level})
     </insert>
     <update id="increaseLikeById">
         UPDATE comment SET "like"="like"+1 WHERE id=#{id};
@@ -21,4 +21,7 @@
     <update id="increaseDislikeById">
         UPDATE comment SET "dislike"="dislike"+1 WHERE id=#{id};
     </update>
+    <select id="queryComments">
+        SELECT * FROM comment WHERE product_id=#{productId} ORDER BY comment.time;
+    </select>
 </mapper>

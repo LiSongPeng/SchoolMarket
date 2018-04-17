@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solar.mapper.ShoppingCartMapper">
+    <resultMap id="shoppingCartMap" type="ShoppingCart">
+        <id property="id" column="id"/>
+        <result property="number" column="number"/>
+        <result property="addTime" column="add_time"/>
+        <association property="user" column="user_id" resultMap="userMap"/>
+        <association property="product" column="product_id" resultMap="productMap"/>
+    </resultMap>
+    <select id="queryByUserId">
+        SELECT * FROM shoppingcart WHERE user_id=#{userId} ORDER BY add_time
+    </select>
+    <update id="updateNumber">
+        UPDATE shoppingcart SET number=#{number} WHERE id=#{id}
+    </update>
+    <delete id="removeShoppingCart">
+        DELETE FROM shoppingcart WHERE id=#{id}
+    </delete>
+    <insert id="addShoppingCart">
+        INSERT INTO shoppingcart(id,number,user_id,product_id) VALUES (#{id},#{number},#{userId},#{productId})
+    </insert>
+</mapper>

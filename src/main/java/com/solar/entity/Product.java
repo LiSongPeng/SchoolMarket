@@ -14,6 +14,10 @@ public class Product {
     private int type;
     private int status;
     private int number;
+    private String imga;
+    private String imgb;
+    private String imgc;
+    private String imgd;
     private Category category;
 
     public Product() {
@@ -89,5 +93,37 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getImga() {
+        return imga;
+    }
+
+    public void setImga(String imga) {
+        this.imga = imga;
+    }
+
+    public String getImgb() {
+        return imgb;
+    }
+
+    public void setImgb(String imgb) {
+        this.imgb = imgb;
+    }
+
+    public String getImgc() {
+        return imgc;
+    }
+
+    public void setImgc(String imgc) {
+        this.imgc = imgc;
+    }
+
+    public String getImgd() {
+        return imgd;
+    }
+
+    public void setImgd(String imgd) {
+        this.imgd = imgd;
     }
 }

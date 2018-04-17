@@ -11,6 +11,7 @@
         <typeAlias alias="Comment" type="com.solar.entity.Comment"/>
         <typeAlias alias="Product" type="com.solar.entity.Product"/>
         <typeAlias alias="Order" type="com.solar.entity.Order"/>
+        <typeAlias alias="ShoppingCart" type="com.solar.entity.ShoppingCart"/>
     </typeAliases>
     <!--    <typeHandlers>
             <typeHandler handler="com.zh.framework.util.StringBlobHandler"/>

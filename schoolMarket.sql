@@ -168,11 +168,12 @@ CREATE TABLE `comment` (
   `id` char(36) NOT NULL,
   `content` tinytext NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `like` int(11) DEFAULT '0',
-  `dislike` int(11) DEFAULT '0',
+  `like` int(11) NOT NULL DEFAULT '0',
+  `dislike` int(11) NOT NULL DEFAULT '0',
   `product_id` char(36) DEFAULT NULL,
   `user_id` char(36) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT '1' COMMENT '1 审核中 0 未通过 2 通过',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 审核中 0 未通过 2 通过',
+  `level` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 1 2 3 4 5星',
   PRIMARY KEY (`id`),
   KEY `comment_product_fk` (`product_id`),
   KEY `comment_user_fk` (`user_id`),
@@ -229,11 +230,11 @@ CREATE TABLE `order` (
   `number` int(11) DEFAULT NULL,
   `order_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `finish_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `status` tinyint(4) DEFAULT '1' COMMENT '1 未派送 2 派送中 3 已完成',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 未派送 2 派送中 3 已完成',
   `user_id` char(36) DEFAULT NULL,
   `product_id` char(36) DEFAULT NULL,
-  `total_price` int(11) DEFAULT '0',
-  `price` int(11) DEFAULT '0',
+  `total_price` int(11) NOT NULL DEFAULT '0',
+  `price` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `order_user_fk` (`user_id`),
   KEY `order_product_fk` (`product_id`),
@@ -289,10 +290,14 @@ CREATE TABLE `product` (
   `disc` tinytext COMMENT '商品描述',
   `category_id` char(36) DEFAULT NULL COMMENT '商品类别',
   `release_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发布时间',
-  `type` tinyint(4) DEFAULT '1' COMMENT '1 常规商品 2 二手商品 3拍卖商品',
+  `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 常规商品 2 二手商品 3拍卖商品',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 销售中 0 禁止销售 2 审核中',
   `number` int(11) DEFAULT NULL COMMENT '库存数量',
   `publisher` char(36) DEFAULT NULL,
+  `imga` varchar(60) DEFAULT NULL,
+  `imgb` varchar(60) DEFAULT NULL,
+  `imgc` varchar(60) DEFAULT NULL,
+  `imgd` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_category_fk` (`category_id`),
   KEY `product_user_fk` (`publisher`),
@@ -320,7 +325,7 @@ DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `content` tinytext NOT NULL,
   `ask_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` tinyint(4) DEFAULT '1' COMMENT '1 审核中 2 提问中',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 审核中 2 提问中',
   `product_id` char(36) DEFAULT NULL,
   `user_id` char(36) DEFAULT NULL,
   `id` char(36) NOT NULL,
@@ -339,33 +344,6 @@ CREATE TABLE `question` (
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `resource`
---
-
-DROP TABLE IF EXISTS `resource`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `resource` (
-  `id` char(36) NOT NULL,
-  `type` tinyint(4) DEFAULT '1' COMMENT '1 图片',
-  `url` varchar(60) NOT NULL COMMENT '相对工程根目录地址',
-  `product_id` char(36) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `resource_product_fk` (`product_id`),
-  CONSTRAINT `resource_product_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `resource`
---
-
-LOCK TABLES `resource` WRITE;
-/*!40000 ALTER TABLE `resource` DISABLE KEYS */;
-/*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -459,7 +437,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` char(36) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `gender` tinyint(4) DEFAULT '1' COMMENT '1 男 0 女',
+  `gender` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 男 0 女',
   `identify` varchar(30) NOT NULL COMMENT '身份证',
   `location` varchar(60) NOT NULL COMMENT '收货地址',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 正常 0 禁用',
@@ -494,4 +472,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-17 16:06:09
+-- Dump completed on 2018-04-17 17:41:18

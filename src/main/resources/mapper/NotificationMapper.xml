@@ -12,4 +12,14 @@
     <select id="getNotificationsByUserId">
         SELECT * FROM notification WHERE target=#{userId};
     </select>
+    <insert id="addNotification">
+        INSERT INTO notification(id, title, content, target) VALUES (#{id},#{title},
+        #{content},#{userId})
+    </insert>
+    <delete id="deleteNotification">
+        DELETE FROM notification WHERE id=#{id}
+    </delete>
+    <delete id="deleteAllNotificationByUserId">
+        DELETE FROM notification WHERE target=#{userId}
+    </delete>
 </mapper>

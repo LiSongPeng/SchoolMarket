@@ -12,6 +12,10 @@
         <result property="type" column="type"/>
         <result property="status" column="status"/>
         <result property="number" column="number"/>
+        <result property="imga" column="imga"/>
+        <result property="imgb" column="imgb"/>
+        <result property="imgc" column="imgc"/>
+        <result property="imgd" column="imgd"/>
         <association property="category" column="category_id" resultMap="categoryMap"/>
     </resultMap>
 </mapper>

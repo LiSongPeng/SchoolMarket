@@ -1,6 +1,9 @@
 package com.solar.service.impls;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.solar.entity.Category;
+import com.solar.entity.Comment;
 import com.solar.mapper.CategoryMapper;
 import com.solar.mapper.CommentMapper;
 import com.solar.service.interfaces.ProductService;
@@ -24,8 +27,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean comment(String userId, String productId, String content) {
-        return commentMapper.addComment(UUIDGenerator.getUUID(), content, productId, userId) > 0;
+    public boolean comment(String userId, String productId, String content, int level) {
+        return commentMapper.addComment(UUIDGenerator.getUUID(), content, productId, userId, level) > 0;
+    }
+
+    @Override
+    public PageInfo<Comment> queryCommentsByProductId(String productId, int pageSize, int pageNumber) {
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(pageNumber, pageSize);
+        List<Comment> list = commentMapper.queryComments(productId);
+        return new PageInfo<>(list);
     }
 
     @Autowired
