@@ -17,5 +17,40 @@
         <result property="imgc" column="imgc"/>
         <result property="imgd" column="imgd"/>
         <association property="category" column="category_id" resultMap="categoryMap"/>
+        <association property="publisher" column="publisher" resultMap="userMap"/>
     </resultMap>
+    <insert id="addProduct" parameterType="Product">
+        INSERT INTO product(id, name, price, disc, type, category_id, number, publisher, imga, imgb, imgc, imgd)
+         VALUES (#{product.id},#{product.name},#{product.price},#{product.disc},
+         #{product.type},#{product.category.id},#{product.number},#{product.user.id},
+         #{product.imga},#{product.imgb},#{product.imgc},#{product.imgd}
+         )
+    </insert>
+    <select id="queryNumber">
+        SELECT number FROM product WHERE id=#{id};
+    </select>
+    <delete id="deleteProduct">
+        DELETE FROM product WHERE id=#{id};
+    </delete>
+    <update id="updateProduct">
+        UPDATE product SET price=#{price},number=#{number},category_id=#{category} WHERE id=#{id}
+    </update>
+    <select id="queryProductByType">
+        SELECT * FROM product WHERE type=#{type}
+    </select>
+
+    <select id="queryAll">
+        SELECT * FROM product
+    </select>
+
+    <select id="queryProductByCategoryId">
+        SELECT * FROM product WHERE category_id=#{categoryId}
+    </select>
+
+    <select id="queryProductByUserIdAndStatus">
+        SELECT * FROM product WHERE publisher=#{userId} AND status=#{status}
+    </select>
+    <update id="soldOut">
+        UPDATE product SET status=3 WHERE id=#{id}/*商品下架*/
+    </update>
 </mapper>

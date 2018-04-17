@@ -4,8 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.solar.entity.Category;
 import com.solar.entity.Comment;
+import com.solar.entity.Product;
 import com.solar.mapper.CategoryMapper;
 import com.solar.mapper.CommentMapper;
+import com.solar.mapper.ProductMapper;
 import com.solar.service.interfaces.ProductService;
 import com.solar.utils.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private CategoryMapper categoryMapper;
     private CommentMapper commentMapper;
+    private ProductMapper productMapper;
 
     @Override
     public List<Category> getCategorys() {
@@ -39,6 +42,63 @@ public class ProductServiceImpl implements ProductService {
         return new PageInfo<>(list);
     }
 
+    @Override
+    public boolean addProduct(Product product) {
+        return productMapper.addProduct(product) > 0;
+    }
+
+    @Override
+    public int queryNumber(String id) {
+        return productMapper.queryNumber(id);
+    }
+
+    @Override
+    public boolean deleteProduct(String id) {
+        return productMapper.deleteProduct(id) > 0;
+    }
+
+    @Override
+    public boolean updateProduct(String id, int number, int price, String category) {
+        return productMapper.updateProduct(id, number, price, category) > 0;
+    }
+
+    @Override
+    public PageInfo<Product> queryProductByType(int type, int pageNumber, int pageSize) {
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(pageNumber, pageSize);
+        List<Product> list = productMapper.queryProductByType(type);
+        return new PageInfo<>(list);
+    }
+
+    @Override
+    public PageInfo<Product> queryAll(int pageNumber, int pageSize) {
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(pageNumber, pageSize);
+        List<Product> list = productMapper.queryAll();
+        return new PageInfo<>(list);
+    }
+
+    @Override
+    public PageInfo<Product> queryProductByCategoryId(String categoryId, int pageNumber, int pageSize) {
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(pageNumber, pageSize);
+        List<Product> list = productMapper.queryProductByCategoryId(categoryId);
+        return new PageInfo<>(list);
+    }
+
+    @Override
+    public PageInfo<Product> queryProductByUserIdAndStatus(String userId, int status, int pageNumber, int pageSize) {
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(pageNumber, pageSize);
+        List<Product> list = productMapper.queryProductByUserIdAndStatus(userId, status);
+        return new PageInfo<>(list);
+    }
+
+    @Override
+    public boolean soldOut(String id) {
+        return productMapper.soldOut(id) > 0;
+    }
+
     @Autowired
     public void setCategoryMapper(CategoryMapper categoryMapper) {
         this.categoryMapper = categoryMapper;
@@ -47,5 +107,10 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     public void setCommentMapper(CommentMapper commentMapper) {
         this.commentMapper = commentMapper;
+    }
+
+    @Autowired
+    public void setProductMapper(ProductMapper productMapper) {
+        this.productMapper = productMapper;
     }
 }

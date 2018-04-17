@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solar.mapper.AuctionRecordMapper">
+    <resultMap id="auctionRecordMap" type="AuctionRecord">
+        <id property="id" column="id"/>
+        <result property="price" column="price"/>
+        <result property="time" column="time"/>
+        <association property="user" column="user_id" resultMap="userMap"/>
+        <association property="product" column="product_id" resultMap="productMap"/>
+    </resultMap>
+    <insert id="addAuctionRecord">
+        INSERT INTO auction_record(id, price, user_id, product_id) VALUES (#{id},
+        #{price},#{userId},#{productId})
+    </insert>
+    <select id="queryAuctionRecordByProductId">
+        SELECT * FROM auction_record WHERE product_id=#{productId} ORDER BY "price" DESC
+    </select>
+    <delete id="deleteAuctionRecordsByProductId">
+        DELETE FROM auction_record WHERE product_id=#{productId}
+    </delete>
+</mapper>

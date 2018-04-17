@@ -73,37 +73,6 @@ LOCK TABLES `admin_role` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `answer`
---
-
-DROP TABLE IF EXISTS `answer`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `answer` (
-  `id` char(36) NOT NULL,
-  `content` tinytext NOT NULL,
-  `answer_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` tinyint(4) DEFAULT NULL COMMENT '1 审核中 2 显示中',
-  `user_id` char(36) DEFAULT NULL,
-  `question_id` char(36) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `answer_user_fk` (`user_id`),
-  KEY `answer_question_fk` (`question_id`),
-  CONSTRAINT `answer_question_fk` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`),
-  CONSTRAINT `answer_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `answer`
---
-
-LOCK TABLES `answer` WRITE;
-/*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-/*!40000 ALTER TABLE `answer` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `auction_record`
 --
 
@@ -291,7 +260,7 @@ CREATE TABLE `product` (
   `category_id` char(36) DEFAULT NULL COMMENT '商品类别',
   `release_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发布时间',
   `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 常规商品 2 二手商品 3拍卖商品',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 销售中 0 禁止销售 2 审核中',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 销售中 0 禁止销售 2 审核中 3 已下架',
   `number` int(11) DEFAULT NULL COMMENT '库存数量',
   `publisher` char(36) DEFAULT NULL,
   `imga` varchar(60) DEFAULT NULL,
@@ -313,37 +282,6 @@ CREATE TABLE `product` (
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `question`
---
-
-DROP TABLE IF EXISTS `question`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `question` (
-  `content` tinytext NOT NULL,
-  `ask_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 审核中 2 提问中',
-  `product_id` char(36) DEFAULT NULL,
-  `user_id` char(36) DEFAULT NULL,
-  `id` char(36) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `question_product_fk` (`product_id`),
-  KEY `question_user_fk` (`user_id`),
-  CONSTRAINT `question_product_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  CONSTRAINT `question_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `question`
---
-
-LOCK TABLES `question` WRITE;
-/*!40000 ALTER TABLE `question` DISABLE KEYS */;
-/*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -472,4 +410,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-17 17:41:18
+-- Dump completed on 2018-04-17 20:54:38

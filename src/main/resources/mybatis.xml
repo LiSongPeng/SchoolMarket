@@ -12,6 +12,7 @@
         <typeAlias alias="Product" type="com.solar.entity.Product"/>
         <typeAlias alias="Order" type="com.solar.entity.Order"/>
         <typeAlias alias="ShoppingCart" type="com.solar.entity.ShoppingCart"/>
+        <typeAlias alias="AuctionRecord" type="com.solar.entity.AuctionRecord"/>
     </typeAliases>
     <!--    <typeHandlers>
             <typeHandler handler="com.zh.framework.util.StringBlobHandler"/>
