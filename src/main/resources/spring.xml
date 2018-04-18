@@ -9,12 +9,11 @@
     <context:annotation-config/>
     <tx:annotation-driven/>
     <context:component-scan base-package="com.solar.service.impls,com.solar.mapper"/>
-    <!--mybatis configuration-->
     <context:property-placeholder location="classpath:config.properties"/>
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="url" value="${url}"/>
         <property name="maxWaitMillis" value="${maxWait}"/>
-        <property name="username" value="${username}"/>
+        <property name="username" value="${user}"/>
         <property name="password" value="${password}"/>
         <property name="driverClassName" value="${driver}"/>
         <property name="minIdle" value="${minIdle}"/>
@@ -31,7 +30,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.zh.framework.mapper"/>
+        <property name="basePackage" value="com.solar.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

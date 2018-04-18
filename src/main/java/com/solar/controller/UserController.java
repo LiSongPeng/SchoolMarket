@@ -79,7 +79,7 @@ public class UserController {
         LOG.debug("path:" + path);
         String headImgName = headImg.getOriginalFilename();
         LOG.debug("headImg:" + headImgName);
-        String newHeadImgName = path + File.pathSeparator + UUIDGenerator.getUUID() + headImgName.substring(headImgName.indexOf('.'));
+        String newHeadImgName = path + File.separator + UUIDGenerator.getUUID() + headImgName.substring(headImgName.indexOf('.'));
         LOG.debug("newheadImgName:" + headImgName);
         File file = new File(newHeadImgName);
         try {
@@ -207,7 +207,7 @@ public class UserController {
         LOG.debug("path:" + path);
         String headImgName = headImg.getOriginalFilename();
         LOG.debug("headImg:" + headImgName);
-        String newHeadImgName = path + File.pathSeparator + UUIDGenerator.getUUID() + headImgName.substring(headImgName.indexOf('.'));
+        String newHeadImgName = path + File.separator + UUIDGenerator.getUUID() + headImgName.substring(headImgName.indexOf('.'));
         LOG.debug("newheadImgName:" + headImgName);
         File file = new File(newHeadImgName);
         try {

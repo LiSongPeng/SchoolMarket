@@ -102,7 +102,7 @@ public class ProductController {
         String[] imgNames = new String[imgs.length];
         for (int i = 0; i < imgNames.length; i++) {
             String imgName = imgs[i].getOriginalFilename();
-            imgNames[i] = path + File.pathSeparator + UUIDGenerator.getUUID() + imgName.substring(imgName.indexOf('.'));
+            imgNames[i] = path + File.separator + UUIDGenerator.getUUID() + imgName.substring(imgName.indexOf('.'));
             File file = new File(imgNames[i]);
             try {
                 imgs[i].transferTo(file);
