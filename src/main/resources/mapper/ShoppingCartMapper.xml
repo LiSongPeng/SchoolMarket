@@ -10,7 +10,7 @@
         <association property="user" column="user_id" resultMap="userMap"/>
         <association property="product" column="product_id" resultMap="productMap"/>
     </resultMap>
-    <select id="queryByUserId">
+    <select id="queryByUserId" resultType="ShoppingCart">
         SELECT * FROM shoppingcart WHERE user_id=#{userId} ORDER BY add_time
     </select>
     <update id="updateNumber">

@@ -27,28 +27,28 @@
          #{product.imga},#{product.imgb},#{product.imgc},#{product.imgd}
          )
     </insert>
-    <select id="queryNumber">
-        SELECT number FROM product WHERE id=#{id};
+    <select id="queryNumber" resultType="Product">
+        SELECT number FROM product WHERE id=#{id}
     </select>
     <delete id="deleteProduct">
-        DELETE FROM product WHERE id=#{id};
+        DELETE FROM product WHERE id=#{id}
     </delete>
     <update id="updateProduct">
         UPDATE product SET price=#{price},number=#{number},category_id=#{category} WHERE id=#{id}
     </update>
-    <select id="queryProductByType">
+    <select id="queryProductByType" resultType="Product">
         SELECT * FROM product WHERE type=#{type}
     </select>
 
-    <select id="queryAll">
+    <select id="queryAll" resultType="Product">
         SELECT * FROM product
     </select>
 
-    <select id="queryProductByCategoryId">
+    <select id="queryProductByCategoryId" resultType="Product">
         SELECT * FROM product WHERE category_id=#{categoryId}
     </select>
 
-    <select id="queryProductByUserIdAndStatus">
+    <select id="queryProductByUserIdAndStatus" resultType="Product">
         SELECT * FROM product WHERE publisher=#{userId} AND status=#{status}
     </select>
     <update id="soldOut">
@@ -57,7 +57,7 @@
     <select id="queryProductTitleByKeyWord">
         SELECT product.name FROM product WHERE product.name LIKE #{keyWord}
     </select>
-    <select id="queryProductByKeyWord">
+    <select id="queryProductByKeyWord" resultType="Product">
         SELECT * FROM product WHERE product.name LIKE #{keyWord}
     </select>
     <update id="shutdownComment">

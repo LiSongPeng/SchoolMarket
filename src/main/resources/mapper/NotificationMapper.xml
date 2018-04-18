@@ -9,8 +9,8 @@
         <result property="content" column="content"/>
         <association property="target" resultMap="userMap" column="target"></association>
     </resultMap>
-    <select id="getNotificationsByUserId">
-        SELECT * FROM notification WHERE target=#{userId};
+    <select id="getNotificationsByUserId" resultType="Notification">
+        SELECT * FROM notification WHERE target=#{userId}
     </select>
     <insert id="addNotification">
         INSERT INTO notification(id, title, content, target) VALUES (#{id},#{title},
