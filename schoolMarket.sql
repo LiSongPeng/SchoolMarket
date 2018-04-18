@@ -29,7 +29,7 @@ CREATE TABLE `admin` (
   `status` tinyint(4) DEFAULT '1' COMMENT '1 正常 0 禁用',
   `email` varchar(60) NOT NULL,
   `phone` varchar(20) NOT NULL,
-  `last_login_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_login_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `password` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -402,6 +402,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES ('234234324234','sdfds',1,'124214214124214214','dddddddd',1,'1424242424@qq.com','15510841744','2018-04-18 03:04:33','2018-04-18 03:45:04','123456789','/upload/defaultUserIcon.png','alipay.png');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -414,4 +415,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-18 10:35:01
+-- Dump completed on 2018-04-18 11:50:39
