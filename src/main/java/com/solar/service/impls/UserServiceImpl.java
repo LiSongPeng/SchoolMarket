@@ -6,7 +6,6 @@ import com.solar.entity.User;
 import com.solar.mapper.CommentMapper;
 import com.solar.mapper.UserMapper;
 import com.solar.service.interfaces.UserService;
-import com.solar.vo.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

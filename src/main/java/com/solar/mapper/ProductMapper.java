@@ -36,4 +36,6 @@ public interface ProductMapper {
     List<Product> queryProductByKeyWord(@Param("keyWord") String keyWord);
 
     int shutdownComment(@Param("id") String id);
+
+    int decreaseNumber(@Param("number") int number);
 }

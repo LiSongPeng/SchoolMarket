@@ -213,7 +213,7 @@ public class UserController {
         try {
             headImg.transferTo(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("文件写入错误！");
         }
         boolean result = userService.updateUser(id, location, email, phone, password, newHeadImgName);
         if (result) {

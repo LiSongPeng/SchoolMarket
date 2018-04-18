@@ -6,6 +6,13 @@ import java.util.Date;
  * @author LiHuiBo
  */
 public class Product {
+    public static final int TYPE_NORMAL = 1;
+    public static final int TYPE_USED = 2;
+    public static final int TYPE_AUCTION = 3;
+    public static final int STATUS_ON_BANNED = 0;
+    public static final int STATUS_ON_SALE = 1;
+    public static final int STATUS_ON_REVIEW = 2;
+    public static final int STATUS_ON_SOLDOUT = 3;
     private String id;
     private String name;
     private int price;

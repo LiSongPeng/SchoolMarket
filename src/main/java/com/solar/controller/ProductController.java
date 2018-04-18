@@ -9,7 +9,6 @@ import com.solar.service.interfaces.ProductService;
 import com.solar.utils.Constant;
 import com.solar.utils.UUIDGenerator;
 import com.solar.vo.Response;
-import com.solar.vo.UserView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +106,7 @@ public class ProductController {
             try {
                 imgs[i].transferTo(file);
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error("文件写入错误");
             }
         }
         Product product = new Product();
@@ -203,10 +202,10 @@ public class ProductController {
 
     @RequestMapping("/updateProduct.do")
     @ResponseBody
-    public Response updateProduct(@RequestParam("productId") String product_Id, @RequestParam("number") int number,
+    public Response updateProduct(@RequestParam("productId") String productId, @RequestParam("number") int number,
                                   @RequestParam("price") int price, @RequestParam("category") String category) {
         Response response = new Response();
-        boolean result = productService.updateProduct(product_Id, number, price, category);
+        boolean result = productService.updateProduct(productId, number, price, category);
         if (result) {
             response.setFlag(Response.SUCCESS);
         } else {

@@ -23,11 +23,11 @@
     <insert id="addProduct" parameterType="Product">
         INSERT INTO product(id, name, price, disc, type, category_id, number, publisher, imga, imgb, imgc, imgd)
          VALUES (#{product.id},#{product.name},#{product.price},#{product.disc},
-         #{product.type},#{product.category.id},#{product.number},#{product.user.id},
+         #{product.type},#{product.category.id},#{product.number},#{product.publisher.id},
          #{product.imga},#{product.imgb},#{product.imgc},#{product.imgd}
          )
     </insert>
-    <select id="queryNumber" resultType="Product">
+    <select id="queryNumber" resultType="java.lang.Integer">
         SELECT number FROM product WHERE id=#{id}
     </select>
     <delete id="deleteProduct">
@@ -54,7 +54,7 @@
     <update id="soldOut">
         UPDATE product SET status=3 WHERE id=#{id}/*商品下架*/
     </update>
-    <select id="queryProductTitleByKeyWord">
+    <select id="queryProductNameByKeyWord" resultType="java.lang.String">
         SELECT product.name FROM product WHERE product.name LIKE #{keyWord}
     </select>
     <select id="queryProductByKeyWord" resultType="Product">
@@ -62,5 +62,8 @@
     </select>
     <update id="shutdownComment">
         UPDATE product SET comment=FALSE WHERE id=#{id}
+    </update>
+    <update id="decreaseNumber">
+        UPDATE product SET number=number-#{number}
     </update>
 </mapper>
