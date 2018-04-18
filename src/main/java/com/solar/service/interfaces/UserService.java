@@ -1,7 +1,7 @@
 package com.solar.service.interfaces;
 
+import com.github.pagehelper.PageInfo;
 import com.solar.entity.User;
-import com.solar.vo.UserView;
 
 /**
  * @author LiHuiBo
@@ -13,9 +13,9 @@ public interface UserService {
      *
      * @param phoneOrEmail 可使用手机或者邮箱登录
      * @param password     密码
-     * @return 成功返回用户视图实体，失败返回null
+     * @return 成功返回用户实体，失败返回null
      */
-    UserView login(String phoneOrEmail, String password);
+    User login(String phoneOrEmail, String password);
 
     /**
      * 找回密码业务接口
@@ -49,4 +49,52 @@ public interface UserService {
      * @return
      */
     boolean disklikeComment(String commentId);
+
+    /**
+     * 获取用户
+     *
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    PageInfo<User> getUsers(int pageNumber, int pageSize);
+
+    /**
+     * 根据邮箱获取用户
+     *
+     * @param email
+     * @return
+     */
+    User getUserByEmail(String email);
+
+    /**
+     * 根据手机号获取用户
+     *
+     * @param phone
+     * @return
+     */
+    User getUserByPhone(String phone);
+
+    /**
+     * 根据id获取用户
+     *
+     * @param id
+     * @return
+     */
+    User getUserById(String id);
+
+    /**
+     * 更新用户信息
+     *
+     * @param id
+     * @param location
+     * @param email
+     * @param phone
+     * @param password
+     * @param headImg
+     * @return
+     */
+    boolean updateUser(String id, String location,
+                       String email, String phone,
+                       String password, String headImg);
 }

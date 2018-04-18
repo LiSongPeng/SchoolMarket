@@ -114,6 +114,11 @@ public class ProductServiceImpl implements ProductService {
         return new PageInfo<>(list);
     }
 
+    @Override
+    public boolean shutdownComment(String productId) {
+        return productMapper.shutdownComment(productId) > 0;
+    }
+
     @Autowired
     public void setCategoryMapper(CategoryMapper categoryMapper) {
         this.categoryMapper = categoryMapper;

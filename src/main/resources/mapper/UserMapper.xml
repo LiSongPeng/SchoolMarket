@@ -33,4 +33,21 @@
         INSERT INTO user(id, name, gender, identify, location, email, phone, password,head_img,alipay)  VALUES (#{id},#{name},#{gender},#{identify},
         #{location},#{email},#{phone},#{password},#{headImg},#{alipay})
     </insert>
+
+    <update id="updateUser">
+        UPDATE user SET location=#{location},email=#{email},phone=#{phone},
+        password=#{password},head_img=#{headImg} WHERE id=#{id}
+    </update>
+    <select id="queryUsers">
+        SELECT * FROM user;
+    </select>
+    <select id="queryUserByEmail">
+        SELECT * FROM user WHERE email=#{email}
+    </select>
+    <select id="queryUserByPhone">
+        SELECT * FROM user WHERE phone=#{phone}
+    </select>
+    <select id="queryUserById">
+        SELECT * FROM user WHERE id=#{id}
+    </select>
 </mapper>

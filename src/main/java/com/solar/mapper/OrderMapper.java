@@ -13,7 +13,8 @@ import java.util.List;
 public interface OrderMapper {
     int addOrder(@Param("id") String id, @Param("number") int number,
                  @Param("userId") String userId, @Param("productId") String productId,
-                 @Param("price") int price, @Param("totalPrice") int totalPrice);
+                 @Param("price") int price, @Param("totalPrice") int totalPrice,
+                 @Param("targetId") String targetId);
 
     int dispatchingOrder(@Param("id") String id);
 
@@ -22,4 +23,8 @@ public interface OrderMapper {
     List<Order> queryOrderByUserId(@Param("userId") String userId);
 
     List<Order> queryOrderByUserIdAndStatus(@Param("userId") String userId, @Param("status") int status);
+
+    List<Order> queryOrderByTargetId(@Param("targetId") String targetId);
+
+    List<Order> queryOrderByTargetIdAndStatus(@Param("targetId") String targetId, @Param("status") int status);
 }

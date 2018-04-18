@@ -19,9 +19,9 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
 
     @Override
-    public boolean order(int number, String userId, String productId, int price) {
+    public boolean order(int number, String userId, String productId, int price, String targetId) {
         int totalPrice = number * price;
-        return orderMapper.addOrder(UUIDGenerator.getUUID(), number, userId, productId, price, totalPrice) > 0;
+        return orderMapper.addOrder(UUIDGenerator.getUUID(), number, userId, productId, price, totalPrice, targetId) > 0;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public PageInfo<Order> queryOrders(String userId, int pageSize, int pageNumber) {
+    public PageInfo<Order> getOrdersByUserId(String userId, int pageSize, int pageNumber) {
         PageHelper pageHelper = new PageHelper();
         pageHelper.startPage(pageNumber, pageSize);
         List<Order> list = orderMapper.queryOrderByUserId(userId);
@@ -43,10 +43,26 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public PageInfo<Order> queryOrders(String userId, int pageSize, int pageNumber, int status) {
+    public PageInfo<Order> getOrdersByUserIdAndStatus(String userId, int pageSize, int pageNumber, int status) {
         PageHelper pageHelper = new PageHelper();
         pageHelper.startPage(pageNumber, pageSize);
         List<Order> list = orderMapper.queryOrderByUserIdAndStatus(userId, status);
+        return new PageInfo<>(list);
+    }
+
+    @Override
+    public PageInfo<Order> getOrdersByTargetId(String targetId, int pageSize, int pageNumber) {
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(pageNumber, pageSize);
+        List<Order> list = orderMapper.queryOrderByTargetId(targetId);
+        return new PageInfo<>(list);
+    }
+
+    @Override
+    public PageInfo<Order> getOrdersByTargetIdAndStatus(String targetId, int pageSize, int pageNumber, int status) {
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(pageNumber, pageSize);
+        List<Order> list = orderMapper.queryOrderByTargetIdAndStatus(targetId, status);
         return new PageInfo<>(list);
     }
 

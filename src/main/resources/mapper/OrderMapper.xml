@@ -12,11 +12,12 @@
         <result property="price" column="price"/>
         <result property="totalPrice" column="total_price"/>
         <association property="user" column="user_id" resultMap="userMap"/>
+        <association property="target" column="target" resultMap="userMap"/>
         <association property="product" column="product_id" resultMap="productMap"/>
     </resultMap>
     <insert id="addOrder">
-        INSERT INTO order(id, number, user_id, product_id,price,total_price) VALUES (#{id},#{number},
-        #{userId},#{productId},#{price},#{totalPrice})
+        INSERT INTO order(id, number, user_id, product_id,price,total_price,target) VALUES (#{id},#{number},
+        #{userId},#{productId},#{price},#{totalPrice},#{targetId})
     </insert>
     <update id="dispatchingOrder">
         UPDATE "order" SET status=2 WHERE id=#{id}
@@ -29,5 +30,11 @@
     </select>
     <select id="queryOrderByUserIdAndStatus">
         SELECT * FROM "order" WHERE user_id=#{userId} AND status=#{status}
+    </select>
+    <select id="queryOrderByTargetId">
+        SELECT * FROM "order" WHERE target=#{targetId}
+    </select>
+    <select id="queryOrderByTargetIdAndStatus">
+        SELECT * FROM "order" WHERE target=#{targetId} AND status=#{status}
     </select>
 </mapper>

@@ -12,6 +12,7 @@ public class Order {
     private Date finishTime;
     private int status;
     private User user;
+    private User target;
     private Product product;
     private int price;
     private int totalPrice;
@@ -89,5 +90,13 @@ public class Order {
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public User getTarget() {
+        return target;
+    }
+
+    public void setTarget(User target) {
+        this.target = target;
     }
 }

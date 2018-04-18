@@ -18,6 +18,7 @@ public class Product {
     private String imgb;
     private String imgc;
     private String imgd;
+    private boolean comment;
     private Category category;
     private User publisher;
 
@@ -134,5 +135,13 @@ public class Product {
 
     public void setPublisher(User publisher) {
         this.publisher = publisher;
+    }
+
+    public boolean isComment() {
+        return comment;
+    }
+
+    public void setComment(boolean comment) {
+        this.comment = comment;
     }
 }

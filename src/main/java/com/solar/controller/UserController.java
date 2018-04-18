@@ -1,5 +1,6 @@
 package com.solar.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.solar.entity.User;
 import com.solar.service.interfaces.UserService;
 import com.solar.utils.Constant;
@@ -34,17 +35,17 @@ public class UserController {
     @ResponseBody
     public Response<UserView> login(@RequestParam("phoneOrEmail") String phoneOrEmail, @RequestParam("password") String password) {
         Response<UserView> response = new Response<>();
-        UserView userView = userService.login(phoneOrEmail, password);
-        if (userView == null) {
+        User user = userService.login(phoneOrEmail, password);
+        if (user == null) {
             response.setFlag(Response.FAIL);
             response.setMessage("登录失败，手机号/邮箱或密码错误！");
-        } else if (userView.getStatus() == User.DISABLED_STATUS) {
+        } else if (user.getStatus() == User.DISABLED_STATUS) {
             response.setFlag(Response.FAIL);
             response.setMessage("登录失败，账户被禁用！");
         } else {
             response.setFlag(Response.SUCCESS);
             response.setMessage("登录成功!");
-            response.setData(userView);
+            response.setData(getUserView(user));
         }
         return response;
     }
@@ -84,7 +85,7 @@ public class UserController {
         try {
             headImg.transferTo(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            return "注册失败，请稍后重试！";
         }
         user.setHeadImg(newHeadImgName);
         String alipayName = alipay.getOriginalFilename();
@@ -95,7 +96,7 @@ public class UserController {
         try {
             alipay.transferTo(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            return "注册失败，请稍后重试！";
         }
         user.setAlipay(newAlipayName);
         user.setIdentify(identify);
@@ -138,8 +139,110 @@ public class UserController {
         return response;
     }
 
+    @GetMapping("/getUsers.do")
+    @ResponseBody
+    public Response<PageInfo<User>> getUsers(@RequestParam("pageSize") int pageSize,
+                                             @RequestParam("pageNumber") int pageNumber) {
+        Response<PageInfo<User>> response = new Response<>();
+        PageInfo<User> list = userService.getUsers(pageNumber, pageSize);
+        if (list != null) {
+            response.setFlag(Response.SUCCESS);
+            response.setData(list);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
+    @GetMapping("/getByEmail.do")
+    @ResponseBody
+    public Response<UserView> getByEmail(@RequestParam("email") String email) {
+        Response<UserView> response = new Response<>();
+        User user = userService.getUserByEmail(email);
+        if (user != null) {
+            response.setFlag(Response.SUCCESS);
+            response.setData(getUserView(user));
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
+    @GetMapping("/getByPhone.do")
+    @ResponseBody
+    public Response<UserView> getByPhone(@RequestParam("phone") String phone) {
+        Response<UserView> response = new Response<>();
+        User user = userService.getUserByPhone(phone);
+        if (user != null) {
+            response.setFlag(Response.SUCCESS);
+            response.setData(getUserView(user));
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
+    @GetMapping("/getById.do")
+    @ResponseBody
+    public Response<UserView> getById(@RequestParam("id") String id) {
+        Response<UserView> response = new Response<>();
+        User user = userService.getUserById(id);
+        if (user != null) {
+            response.setFlag(Response.SUCCESS);
+            response.setData(getUserView(user));
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
+    @PostMapping("/update.do")
+    @ResponseBody
+    public Response updateUser(@RequestParam("id") String id, @RequestParam("location") String location,
+                               @RequestParam("email") String email, @RequestParam("phone") String phone,
+                               @RequestParam("password") String password, @RequestParam("headImg") MultipartFile headImg,
+                               HttpSession session) {
+        Response response = new Response();
+        String path = session.getServletContext().getRealPath(Constant.UPLOAD_DIRECTORY);
+        LOG.debug("path:" + path);
+        String headImgName = headImg.getOriginalFilename();
+        LOG.debug("headImg:" + headImgName);
+        String newHeadImgName = path + File.pathSeparator + UUIDGenerator.getUUID() + headImgName.substring(headImgName.indexOf('.'));
+        LOG.debug("newheadImgName:" + headImgName);
+        File file = new File(newHeadImgName);
+        try {
+            headImg.transferTo(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        boolean result = userService.updateUser(id, location, email, phone, password, newHeadImgName);
+        if (result) {
+            response.setFlag(Response.SUCCESS);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    private UserView getUserView(User user) {
+        UserView userView = new UserView();
+        userView.setId(user.getId());
+        userView.setEmail(user.getEmail());
+        userView.setGender(user.getGender());
+        userView.setIdentify(user.getIdentify());
+        userView.setLastLoginTime(user.getLastLoginTime());
+        userView.setLocation(user.getLocation());
+        userView.setName(user.getName());
+        userView.setPhone(user.getPhone());
+        userView.setRegisterTime(user.getRegisterTime());
+        userView.setStatus(user.getStatus());
+        userView.setHeadImg(user.getHeadImg());
+        userView.setAlipay(user.getAlipay());
+        return userView;
     }
 }

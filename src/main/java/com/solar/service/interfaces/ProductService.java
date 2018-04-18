@@ -139,4 +139,12 @@ public interface ProductService {
      * @return
      */
     PageInfo<Product> queryProductByKeyWord(String keyWord, int pageNumber, int pageSize);
+
+    /**
+     * 关闭商品评论功能
+     *
+     * @param productId
+     * @return
+     */
+    boolean shutdownComment(String productId);
 }

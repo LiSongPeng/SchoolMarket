@@ -204,11 +204,14 @@ CREATE TABLE `order` (
   `product_id` char(36) DEFAULT NULL,
   `total_price` int(11) NOT NULL DEFAULT '0',
   `price` int(11) NOT NULL DEFAULT '0',
+  `target` char(36) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `order_user_fk` (`user_id`),
   KEY `order_product_fk` (`product_id`),
+  KEY `order_user_fk2` (`target`),
   CONSTRAINT `order_product_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  CONSTRAINT `order_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `order_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `order_user_fk2` FOREIGN KEY (`target`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -267,6 +270,7 @@ CREATE TABLE `product` (
   `imgb` varchar(60) DEFAULT NULL,
   `imgc` varchar(60) DEFAULT NULL,
   `imgd` varchar(60) DEFAULT NULL,
+  `comment` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否开启评论功能',
   PRIMARY KEY (`id`),
   KEY `product_category_fk` (`category_id`),
   KEY `product_user_fk` (`publisher`),
@@ -410,4 +414,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-17 20:54:38
+-- Dump completed on 2018-04-18 10:35:01

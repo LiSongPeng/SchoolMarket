@@ -23,9 +23,10 @@ public class OrderController {
     @RequestMapping("/order.do")
     @ResponseBody
     public Response order(@RequestParam("number") int number, @RequestParam("userId") String userId,
-                          @RequestParam("productId") String productId, @RequestParam("price") int price) {
+                          @RequestParam("productId") String productId, @RequestParam("price") int price,
+                          @RequestParam("targetId") String targetId) {
         Response response = new Response();
-        boolean result = orderService.order(number, userId, productId, price);
+        boolean result = orderService.order(number, userId, productId, price, targetId);
         if (result) {
             response.setFlag(Response.SUCCESS);
         } else {
@@ -60,13 +61,13 @@ public class OrderController {
         return response;
     }
 
-    @RequestMapping("/queryOrderByUserId.do")
+    @RequestMapping("/queryByUserId.do")
     @ResponseBody
     public Response<PageInfo<Order>> queryOrderByUserId(@RequestParam("userId") String userId,
                                                         @RequestParam("pageSize") int pageSize,
                                                         @RequestParam("pageNumber") int pageNumber) {
         Response<PageInfo<Order>> response = new Response<>();
-        PageInfo<Order> list = orderService.queryOrders(userId, pageSize, pageNumber);
+        PageInfo<Order> list = orderService.getOrdersByUserId(userId, pageSize, pageNumber);
         if (list != null) {
             response.setFlag(Response.SUCCESS);
             response.setData(list);
@@ -76,14 +77,47 @@ public class OrderController {
         return response;
     }
 
-    @RequestMapping("/queryOrderByUserIdAndStatus.do")
+    @RequestMapping("/queryByUserIdAndStatus.do")
     @ResponseBody
     public Response<PageInfo<Order>> queryOrderByUserIdAndStatus(@RequestParam("userId") String userId,
                                                                  @RequestParam("pageSize") int pageSize,
                                                                  @RequestParam("pageNumber") int pageNumber,
                                                                  @RequestParam("status") int status) {
         Response<PageInfo<Order>> response = new Response<>();
-        PageInfo<Order> list = orderService.queryOrders(userId, pageSize, pageNumber, status);
+        PageInfo<Order> list = orderService.getOrdersByUserIdAndStatus(userId, pageSize, pageNumber, status);
+        if (list != null) {
+            response.setFlag(Response.SUCCESS);
+            response.setData(list);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
+    @RequestMapping("/queryByTargetId.do")
+    @ResponseBody
+    public Response<PageInfo<Order>> queryOrderByTargetId(@RequestParam("targetId") String targetId,
+                                                          @RequestParam("pageSize") int pageSize,
+                                                          @RequestParam("pageNumber") int pageNumber) {
+        Response<PageInfo<Order>> response = new Response<>();
+        PageInfo<Order> list = orderService.getOrdersByTargetId(targetId, pageSize, pageNumber);
+        if (list != null) {
+            response.setFlag(Response.SUCCESS);
+            response.setData(list);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
+    @RequestMapping("/queryByTargetIdAndStatus.do")
+    @ResponseBody
+    public Response<PageInfo<Order>> queryOrderByTargetIdAndStatus(@RequestParam("targetId") String targetId,
+                                                                   @RequestParam("pageSize") int pageSize,
+                                                                   @RequestParam("pageNumber") int pageNumber,
+                                                                   @RequestParam("status") int status) {
+        Response<PageInfo<Order>> response = new Response<>();
+        PageInfo<Order> list = orderService.getOrdersByTargetIdAndStatus(targetId, pageSize, pageNumber, status);
         if (list != null) {
             response.setFlag(Response.SUCCESS);
             response.setData(list);

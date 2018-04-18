@@ -34,4 +34,6 @@ public interface ProductMapper {
     List<String> queryProductNameByKeyWord(@Param("keyWord") String keyWord);
 
     List<Product> queryProductByKeyWord(@Param("keyWord") String keyWord);
+
+    int shutdownComment(@Param("id") String id);
 }

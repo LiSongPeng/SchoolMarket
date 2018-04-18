@@ -1,5 +1,7 @@
 package com.solar.service.impls;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.solar.entity.User;
 import com.solar.mapper.CommentMapper;
 import com.solar.mapper.UserMapper;
@@ -7,6 +9,8 @@ import com.solar.service.interfaces.UserService;
 import com.solar.vo.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -18,26 +22,13 @@ public class UserServiceImpl implements UserService {
     private CommentMapper commentMapper;
 
     @Override
-    public UserView login(String phoneOrEmail, String password) {
+    public User login(String phoneOrEmail, String password) {
         User user = userMapper.queryUser(phoneOrEmail, password);
         if (user == null) {
             return null;
         }
         userMapper.updateLastLoginTime(user.getId());
-        UserView userView = new UserView();
-        userView.setId(user.getId());
-        userView.setEmail(user.getEmail());
-        userView.setGender(user.getGender());
-        userView.setIdentify(user.getIdentify());
-        userView.setLastLoginTime(user.getLastLoginTime());
-        userView.setLocation(user.getLocation());
-        userView.setName(user.getName());
-        userView.setPhone(user.getPhone());
-        userView.setRegisterTime(user.getRegisterTime());
-        userView.setStatus(user.getStatus());
-        userView.setHeadImg(user.getHeadImg());
-        userView.setAlipay(user.getAlipay());
-        return userView;
+        return user;
     }
 
     @Override
@@ -58,6 +49,34 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean disklikeComment(String commentId) {
         return commentMapper.increaseDislikeById(commentId) > 0;
+    }
+
+    @Override
+    public PageInfo<User> getUsers(int pageNumber, int pageSize) {
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(pageNumber, pageSize);
+        List<User> list = userMapper.queryUsers();
+        return new PageInfo<>(list);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userMapper.queryUserByEmail(email);
+    }
+
+    @Override
+    public User getUserByPhone(String phone) {
+        return userMapper.queryUserByPhone(phone);
+    }
+
+    @Override
+    public User getUserById(String id) {
+        return userMapper.queryUserById(id);
+    }
+
+    @Override
+    public boolean updateUser(String id, String location, String email, String phone, String password, String headImg) {
+        return userMapper.updateUser(id, location, email, phone, password, headImg) > 0;
     }
 
     @Autowired

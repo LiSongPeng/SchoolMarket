@@ -9,6 +9,7 @@ import com.solar.service.interfaces.ProductService;
 import com.solar.utils.Constant;
 import com.solar.utils.UUIDGenerator;
 import com.solar.vo.Response;
+import com.solar.vo.UserView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,19 @@ public class ProductController {
                             @RequestParam("content") String content,
                             @RequestParam("level") int level) {
         boolean result = productService.comment(userId, productId, content, level);
+        Response response = new Response();
+        if (result) {
+            response.setFlag(Response.SUCCESS);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
+    @GetMapping("/shutdownComment.do")
+    @ResponseBody
+    public Response shutdownComment(@RequestParam("productId") String productId) {
+        boolean result = productService.shutdownComment(productId);
         Response response = new Response();
         if (result) {
             response.setFlag(Response.SUCCESS);

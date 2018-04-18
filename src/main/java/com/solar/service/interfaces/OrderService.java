@@ -14,9 +14,10 @@ public interface OrderService {
      * @param userId
      * @param productId
      * @param price
+     * @param targetId
      * @return
      */
-    boolean order(int number, String userId, String productId, int price);
+    boolean order(int number, String userId, String productId, int price, String targetId);
 
     /**
      * 确认订单发货
@@ -42,7 +43,7 @@ public interface OrderService {
      * @param pageNumber
      * @return
      */
-    PageInfo<Order> queryOrders(String userId, int pageSize, int pageNumber);
+    PageInfo<Order> getOrdersByUserId(String userId, int pageSize, int pageNumber);
 
     /**
      * 分页查询订单
@@ -53,5 +54,26 @@ public interface OrderService {
      * @param status
      * @return
      */
-    PageInfo<Order> queryOrders(String userId, int pageSize, int pageNumber, int status);
+    PageInfo<Order> getOrdersByUserIdAndStatus(String userId, int pageSize, int pageNumber, int status);
+
+    /**
+     * 分页查询订单
+     *
+     * @param targetId
+     * @param pageSize
+     * @param pageNumber
+     * @return
+     */
+    PageInfo<Order> getOrdersByTargetId(String targetId, int pageSize, int pageNumber);
+
+    /**
+     * 分页查询订单
+     *
+     * @param targetId
+     * @param pageSize
+     * @param pageNumber
+     * @param status
+     * @return
+     */
+    PageInfo<Order> getOrdersByTargetIdAndStatus(String targetId, int pageSize, int pageNumber, int status);
 }

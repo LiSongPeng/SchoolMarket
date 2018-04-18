@@ -16,6 +16,7 @@
         <result property="imgb" column="imgb"/>
         <result property="imgc" column="imgc"/>
         <result property="imgd" column="imgd"/>
+        <result property="comment" column="comment"/>
         <association property="category" column="category_id" resultMap="categoryMap"/>
         <association property="publisher" column="publisher" resultMap="userMap"/>
     </resultMap>
@@ -59,4 +60,7 @@
     <select id="queryProductByKeyWord">
         SELECT * FROM product WHERE product.name LIKE #{keyWord}
     </select>
+    <update id="shutdownComment">
+        UPDATE product SET comment=FALSE WHERE id=#{id}
+    </update>
 </mapper>
