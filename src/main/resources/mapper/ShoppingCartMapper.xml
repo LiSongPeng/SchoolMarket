@@ -7,11 +7,14 @@
         <id property="id" column="id"/>
         <result property="number" column="number"/>
         <result property="addTime" column="add_time"/>
-        <association property="user" column="user_id" resultMap="userMap"/>
-        <association property="product" column="product_id" resultMap="productMap"/>
+        <association property="user" column="user_id" resultMap="com.solar.mapper.UserMapper.userMap"/>
+        <association property="product" column="product_id" resultMap="com.solar.mapper.ProductMapper.productMap"/>
     </resultMap>
-    <select id="queryByUserId" resultType="ShoppingCart">
-        SELECT * FROM shoppingcart WHERE user_id=#{userId} ORDER BY add_time
+    <select id="queryByUserId" resultMap="shoppingCartMap">
+--         SELECT * FROM shoppingcart WHERE user_id=#{userId} ORDER BY add_time
+        SELECT product.product_id,product.name,product.imga,shoppingcart.*
+        FROM product,shoppingcart WHERE shoppingcart.user_id=#{userId}
+        AND shoppingcart.product_id=product.id ORDER BY shoppingcart.add_time
     </select>
     <update id="updateNumber">
         UPDATE shoppingcart SET number=#{number} WHERE id=#{id}

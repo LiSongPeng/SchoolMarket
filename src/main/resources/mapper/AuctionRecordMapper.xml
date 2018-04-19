@@ -7,15 +7,15 @@
         <id property="id" column="id"/>
         <result property="price" column="price"/>
         <result property="time" column="time"/>
-        <association property="user" column="user_id" resultMap="userMap"/>
-        <association property="product" column="product_id" resultMap="productMap"/>
+        <association property="user" column="user_id" resultMap="com.solar.mapper.UserMapper.userMap"/>
+        <association property="product" column="product_id" resultMap="com.solar.mapper.ProductMapper.productMap"/>
     </resultMap>
     <insert id="addAuctionRecord">
         INSERT INTO auction_record(id, price, user_id, product_id) VALUES (#{id},
         #{price},#{userId},#{productId})
     </insert>
-    <select id="queryAuctionRecordByProductId" resultType="AuctionRecord">
-        SELECT * FROM auction_record WHERE product_id=#{productId} ORDER BY "price" DESC
+    <select id="queryAuctionRecordByProductId" resultMap="auctionRecordMap">
+        SELECT auction_record.* ,user.id,user.name,user.head_img,FROM auction_record,user WHERE auction_record.product_id=#{productId} AND user.id=auction_record.user_id ORDER BY auction_record."price" DESC
     </select>
     <delete id="deleteAuctionRecordsByProductId">
         DELETE FROM auction_record WHERE product_id=#{productId}

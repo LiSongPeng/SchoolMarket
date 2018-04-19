@@ -17,8 +17,8 @@
         <result property="imgc" column="imgc"/>
         <result property="imgd" column="imgd"/>
         <result property="comment" column="comment"/>
-        <association property="category" column="category_id" resultMap="categoryMap"/>
-        <association property="publisher" column="publisher" resultMap="userMap"/>
+        <association property="category" column="category_id" resultMap="com.solar.mapper.CategoryMapper.categoryMap"/>
+        <association property="publisher" column="publisher" resultMap="com.solar.mapper.UserMapper.userMap"/>
     </resultMap>
     <insert id="addProduct" parameterType="Product">
         INSERT INTO product(id, name, price, disc, type, category_id, number, publisher, imga, imgb, imgc, imgd)
@@ -36,19 +36,19 @@
     <update id="updateProduct">
         UPDATE product SET price=#{price},number=#{number} WHERE id=#{id}
     </update>
-    <select id="queryProductByType" resultType="Product">
+    <select id="queryProductByType" resultMap="productMap">
         SELECT * FROM product WHERE type=#{type}
     </select>
 
-    <select id="queryAll" resultType="Product">
+    <select id="queryAll" resultMap="productMap">
         SELECT * FROM product
     </select>
 
-    <select id="queryProductByCategoryId" resultType="Product">
+    <select id="queryProductByCategoryId" resultMap="productMap">
         SELECT * FROM product WHERE category_id=#{categoryId}
     </select>
 
-    <select id="queryProductByUserIdAndStatus" resultType="Product">
+    <select id="queryProductByUserIdAndStatus" resultMap="productMap">
         SELECT * FROM product WHERE publisher=#{userId} AND status=#{status}
     </select>
     <update id="soldOut">
@@ -57,10 +57,10 @@
     <select id="queryProductNameByKeyWord" resultType="java.lang.String">
         SELECT product.name FROM product WHERE product.name LIKE #{keyWord}
     </select>
-    <select id="queryProductByKeyWord" resultType="Product">
+    <select id="queryProductByKeyWord" resultMap="productMap">
         SELECT * FROM product WHERE product.name LIKE #{keyWord}
     </select>
-    <select id="queryProductById" resultType="Product">
+    <select id="queryProductById" resultMap="productMap">
         SELECT * FROM product WHERE product.id=#{id}
     </select>
     <update id="shutdownComment">
@@ -72,7 +72,7 @@
     <update id="decreaseNumber">
         UPDATE product SET number=number-#{number}
     </update>
-    <select id="queryProductByUserId" resultType="Product">
+    <select id="queryProductByUserId" resultMap="productMap">
         SELECT * FROM product WHERE publisher=#{userId}
     </select>
 </mapper>

@@ -18,7 +18,7 @@
         <result property="headImg" column="head_img"/>
         <result property="alipay" column="alipay"/>
     </resultMap>
-    <select id="queryUser" resultType="User">
+    <select id="queryUser" resultMap="userMap">
         SELECT * FROM user WHERE user.password=#{password}
         AND user.phone=#{phoneOrEmail} OR user.email=#{phoneOrEmail}
     </select>
@@ -38,16 +38,16 @@
         UPDATE user SET location=#{location},email=#{email},phone=#{phone},
         password=#{password} WHERE id=#{id}
     </update>
-    <select id="queryUsers" resultType="User">
+    <select id="queryUsers" resultMap="userMap">
         SELECT * FROM user
     </select>
-    <select id="queryUserByEmail" resultType="User">
+    <select id="queryUserByEmail" resultMap="userMap">
         SELECT * FROM user WHERE email=#{email}
     </select>
-    <select id="queryUserByPhone" resultType="User">
+    <select id="queryUserByPhone" resultMap="userMap">
         SELECT * FROM user WHERE phone=#{phone}
     </select>
-    <select id="queryUserById" resultType="User">
+    <select id="queryUserById" resultMap="userMap">
         SELECT * FROM user WHERE id=#{id}
     </select>
 </mapper>

@@ -11,9 +11,9 @@
         <result property="status" column="status"/>
         <result property="price" column="price"/>
         <result property="totalPrice" column="total_price"/>
-        <association property="user" column="user_id" resultMap="userMap"/>
-        <association property="target" column="target" resultMap="userMap"/>
-        <association property="product" column="product_id" resultMap="productMap"/>
+        <association property="user" column="user_id" resultMap="com.solar.mapper.UserMapper.userMap"/>
+        <association property="target" column="target" resultMap="com.solar.mapper.UserMapper.userMap"/>
+        <association property="product" column="product_id" resultMap="com.solar.mapper.ProductMapper.productMap"/>
     </resultMap>
     <insert id="addOrder">
         INSERT INTO `order`(id, number, user_id, product_id,price,total_price,target) VALUES (#{id},#{number},
@@ -25,16 +25,16 @@
     <update id="finishOrder">
         UPDATE `order` SET status=3,finish_time=CURRENT_TIMESTAMP() WHERE id=#{id}
     </update>
-    <select id="queryOrderByUserId" resultType="Order">
+    <select id="queryOrderByUserId" resultMap="orderMap">
         SELECT * FROM `order` WHERE user_id=#{userId}
     </select>
-    <select id="queryOrderByUserIdAndStatus" resultType="Order">
+    <select id="queryOrderByUserIdAndStatus" resultMap="orderMap">
         SELECT * FROM `order` WHERE user_id=#{userId} AND status=#{status}
     </select>
-    <select id="queryOrderByTargetId" resultType="Order">
+    <select id="queryOrderByTargetId" resultMap="orderMap">
         SELECT * FROM `order` WHERE target=#{targetId}
     </select>
-    <select id="queryOrderByTargetIdAndStatus" resultType="Order">
+    <select id="queryOrderByTargetIdAndStatus" resultMap="orderMap">
         SELECT * FROM `order` WHERE target=#{targetId} AND status=#{status}
     </select>
     <select id="queryTargetId" resultType="java.lang.String">

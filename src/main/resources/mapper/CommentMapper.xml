@@ -9,8 +9,9 @@
         <result property="time" column="time"/>
         <result property="like" column="like"/>
         <result property="dislike" column="dislike"/>
-        <association property="product" resultMap="productMap" column="product_id"></association>
-        <association property="user" resultMap="userMap" column="user_id"></association>
+        <association property="product" resultMap="com.solar.mapper.ProductMapper.productMap"
+                     column="product_id"></association>
+        <association property="user" resultMap="com.solar.mapper.UserMapper.userMap" column="user_id"></association>
     </resultMap>
     <insert id="addComment">
         INSERT INTO comment(id, content, product_id, user_id,level) VALUES (#{id},#{content},#{productId},#{userId},#{level})
@@ -21,7 +22,8 @@
     <update id="increaseDislikeById">
         UPDATE comment SET dislike=dislike+1 WHERE id=#{id}
     </update>
-    <select id="queryComments" resultType="Comment">
-        SELECT * FROM comment WHERE product_id=#{productId} ORDER BY comment.time
+    <select id="queryComments" resultMap="commentMap">
+        SELECT user.id,user.name,user.head_img,comment.* FROM comment,user WHERE product_id=#{productId} AND comment.user_id=user.id ORDER BY comment.time
+--         SELECT  comment.* FROM comment WHERE product_id=#{productId} ORDER BY comment.time
     </select>
 </mapper>

@@ -7,9 +7,9 @@
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
-        <association property="target" resultMap="userMap" column="target"></association>
+        <association property="target" resultMap="com.solar.mapper.UserMapper.userMap" column="target"></association>
     </resultMap>
-    <select id="getNotificationsByUserId" resultType="Notification">
+    <select id="getNotificationsByUserId" resultMap="notificationMap">
         SELECT * FROM notification WHERE target=#{userId}
     </select>
     <insert id="addNotification">
