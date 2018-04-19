@@ -119,6 +119,19 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.shutdownComment(productId) > 0;
     }
 
+    @Override
+    public PageInfo<Product> queryProductByUserId(String userId, int pageNumber, int pageSize) {
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(pageNumber, pageSize);
+        List<Product> list = productMapper.queryProductByUserId(userId);
+        return new PageInfo<>(list);
+    }
+
+    @Override
+    public boolean turnOnComment(String productId) {
+        return productMapper.turnOnComment(productId) > 0;
+    }
+
     @Autowired
     public void setCategoryMapper(CategoryMapper categoryMapper) {
         this.categoryMapper = categoryMapper;

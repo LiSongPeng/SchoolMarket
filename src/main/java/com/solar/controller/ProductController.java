@@ -71,6 +71,19 @@ public class ProductController {
         return response;
     }
 
+    @GetMapping("/turnOnComment.do")
+    @ResponseBody
+    public Response turnOnComment(@RequestParam("productId") String productId) {
+        boolean result = productService.turnOnComment(productId);
+        Response response = new Response();
+        if (result) {
+            response.setFlag(Response.SUCCESS);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
     @GetMapping("/queryComment.do")
     @ResponseBody
     public Response<PageInfo<Comment>> queryComment(@RequestParam("productId") String productId,
@@ -214,7 +227,7 @@ public class ProductController {
         return response;
     }
 
-    @RequestMapping("/getProductByType.do")
+    @RequestMapping("/getByType.do")
     @ResponseBody
     public Response<PageInfo<Product>> getProductByType(@RequestParam("type") int type,
                                                         @RequestParam("pageNumber") int pageNumber,
@@ -245,7 +258,7 @@ public class ProductController {
         return response;
     }
 
-    @RequestMapping("/getProductByCategory.do")
+    @RequestMapping("/getByCategory.do")
     @ResponseBody
     public Response<PageInfo<Product>> getProductByCategory(@RequestParam("category") String category,
                                                             @RequestParam("pageNumber") int pageNumber,
@@ -261,7 +274,7 @@ public class ProductController {
         return response;
     }
 
-    @RequestMapping("/getProductByUserIdAndStatus.do")
+    @RequestMapping("/getByUserIdAndStatus.do")
     @ResponseBody
     public Response<PageInfo<Product>> getProductByUserIdAndStatus(@RequestParam("userId") String userId,
                                                                    @RequestParam("status") int status,
@@ -269,6 +282,22 @@ public class ProductController {
                                                                    @RequestParam("pageSize") int pageSize) {
         Response<PageInfo<Product>> response = new Response<>();
         PageInfo<Product> list = productService.queryProductByUserIdAndStatus(userId, status, pageNumber, pageSize);
+        if (list != null) {
+            response.setFlag(Response.SUCCESS);
+            response.setData(list);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
+    @RequestMapping("/getByUserId.do")
+    @ResponseBody
+    public Response<PageInfo<Product>> getProductByUserId(@RequestParam("userId") String userId,
+                                                          @RequestParam("pageNumber") int pageNumber,
+                                                          @RequestParam("pageSize") int pageSize) {
+        Response<PageInfo<Product>> response = new Response<>();
+        PageInfo<Product> list = productService.queryProductByUserId(userId, pageNumber, pageSize);
         if (list != null) {
             response.setFlag(Response.SUCCESS);
             response.setData(list);

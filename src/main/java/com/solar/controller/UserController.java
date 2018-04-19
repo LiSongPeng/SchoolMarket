@@ -196,7 +196,7 @@ public class UserController {
         return response;
     }
 
-    @PostMapping("/update.do")
+    @GetMapping("/update.do")
     @ResponseBody
     public Response updateUser(@RequestParam("id") String id, @RequestParam("location") String location,
                                @RequestParam("email") String email, @RequestParam("phone") String phone,

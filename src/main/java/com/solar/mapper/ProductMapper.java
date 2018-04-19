@@ -40,4 +40,8 @@ public interface ProductMapper {
     int shutdownComment(@Param("id") String id);
 
     int decreaseNumber(@Param("number") int number);
+
+    List<Product> queryProductByUserId(@Param("userId") String userId);
+
+    int turnOnComment(@Param("productId") String productId);
 }

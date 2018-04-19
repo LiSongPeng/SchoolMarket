@@ -147,4 +147,20 @@ public interface ProductService {
      * @return
      */
     boolean shutdownComment(String productId);
+
+    /**
+     * 根据发布人查找商品
+     * @param userId
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    PageInfo<Product> queryProductByUserId(String userId, int pageNumber, int pageSize);
+
+    /**
+     * 开启评论功能
+     * @param productId
+     * @return
+     */
+    boolean turnOnComment(String productId);
 }
