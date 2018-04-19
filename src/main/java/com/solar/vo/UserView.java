@@ -10,7 +10,6 @@ public class UserView {
     private String name;
     private int gender;
     private String identify;
-    private String studentID;
     private String location;
     private int status;
     private String email;
@@ -53,14 +52,6 @@ public class UserView {
 
     public void setIdentify(String identify) {
         this.identify = identify;
-    }
-
-    public String getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
     }
 
     public String getLocation() {

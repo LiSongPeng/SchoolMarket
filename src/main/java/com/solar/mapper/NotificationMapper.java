@@ -2,12 +2,14 @@ package com.solar.mapper;
 
 import com.solar.entity.Notification;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author LiHuiBo
  */
+@Repository
 public interface NotificationMapper {
     List<Notification> getNotificationsByUserId(@Param("userId") String userId);
 

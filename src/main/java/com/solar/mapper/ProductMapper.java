@@ -17,6 +17,8 @@ public interface ProductMapper {
 
     int deleteProduct(@Param("id") String id);
 
+    Product queryProductById(@Param("id") String id);
+
     int updateProduct(@Param("id") String id, @Param("number") int number,
                       @Param("price") int price, @Param("category") String category);
 

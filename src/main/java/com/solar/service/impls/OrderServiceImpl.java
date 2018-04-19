@@ -3,6 +3,8 @@ package com.solar.service.impls;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.solar.entity.Order;
+import com.solar.entity.Product;
+import com.solar.mapper.NotificationMapper;
 import com.solar.mapper.OrderMapper;
 import com.solar.mapper.ProductMapper;
 import com.solar.service.interfaces.OrderService;
@@ -19,23 +21,37 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
     private ProductMapper productMapper;
+    private NotificationMapper notificationMapper;
 
     @Override
     public boolean order(int number, String userId, String productId, int price, String targetId) {
-        int productNumber = productMapper.queryNumber(productId);
-        if (number > productNumber) {
+        Product product = productMapper.queryProductById(productId);
+        if (number > product.getNumber()) {
             return false;
         }
         int totalPrice = number * price;
         if (productMapper.decreaseNumber(number) == 0) {
             return false;
         }
-        return orderMapper.addOrder(UUIDGenerator.getUUID(), number, userId, productId, price, totalPrice, targetId) > 0;
+        if (orderMapper.addOrder(UUIDGenerator.getUUID(), number, userId, productId, price, totalPrice, targetId) > 0) {
+            String title = "您的商品有了一份新订单!";
+            String content = "您的名为：" + product.getName() + "的商品有了一份新订单！";
+            notificationMapper.addNotification(UUIDGenerator.getUUID(), title, content, targetId);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean confirmDispatching(String orderId) {
-        return orderMapper.dispatchingOrder(orderId) > 0;
+        String targetId = orderMapper.queryTargetId(orderId);
+        if (orderMapper.dispatchingOrder(orderId) > 0) {
+            String title = "您的订单有了新状态!";
+            String content = "您的编号为：" + orderId + "的订单已发货！";
+            notificationMapper.addNotification(UUIDGenerator.getUUID(), title, content, targetId);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -83,5 +99,10 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     public void setProductMapper(ProductMapper productMapper) {
         this.productMapper = productMapper;
+    }
+
+    @Autowired
+    public void setNotificationMapper(NotificationMapper notificationMapper) {
+        this.notificationMapper = notificationMapper;
     }
 }

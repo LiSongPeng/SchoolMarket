@@ -1,8 +1,7 @@
 package com.solar.controller;
 
-import com.github.pagehelper.PageInfo;
-import com.solar.entity.AuctionRecord;
-import com.solar.service.interfaces.AuctionRecordService;
+import com.solar.entity.Notification;
+import com.solar.service.interfaces.NotificationService;
 import com.solar.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -11,21 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * @author LiHuiBo
  */
 @Controller
 @Scope("prototype")
-@RequestMapping("/auction")
+@RequestMapping("/notify")
 public class NotificationController {
-    private AuctionRecordService auctionRecordService;
+    private NotificationService notificationService;
 
-    @RequestMapping("/addAuctionRecord.do")
+    @RequestMapping("/delete.do")
     @ResponseBody
-    public Response addAuctionRecord(@RequestParam("price") int price, @RequestParam("userId") String userId,
-                                     @RequestParam("productId") String productId) {
+    public Response delete(@RequestParam("id") String id) {
         Response response = new Response();
-        boolean result = auctionRecordService.auction(userId, productId, price);
+        boolean result = notificationService.deleteNotification(id);
         if (result) {
             response.setFlag(Response.SUCCESS);
         } else {
@@ -34,16 +34,27 @@ public class NotificationController {
         return response;
     }
 
-    @RequestMapping("/queryAuctionRecord.do")
+    @RequestMapping("/deleteAll.do")
     @ResponseBody
-    public Response<PageInfo<AuctionRecord>> queryAuctionRecord(@RequestParam("productId") String productId,
-                                                                @RequestParam("pageSize") int pageSize,
-                                                                @RequestParam("pageNumber") int pageNumber) {
-        Response<PageInfo<AuctionRecord>> response = new Response<>();
-        PageInfo<AuctionRecord> list =auctionRecordService.queryAuctionRecords(productId, pageSize, pageNumber);
-        if (list != null) {
+    public Response addAuctionRecord(@RequestParam("userId") String userId) {
+        Response response = new Response();
+        boolean result = notificationService.deleteAllNotificationByUserId(userId);
+        if (result) {
             response.setFlag(Response.SUCCESS);
-            response.setData(list);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
+    @RequestMapping("/getAll.do")
+    @ResponseBody
+    public Response getAll(@RequestParam("userId") String userId) {
+        Response<List<Notification>> response = new Response<>();
+        List<Notification> result = notificationService.getNotificationsByUserId(userId);
+        if (result != null) {
+            response.setFlag(Response.SUCCESS);
+            response.setData(result);
         } else {
             response.setFlag(Response.FAIL);
         }
@@ -51,7 +62,7 @@ public class NotificationController {
     }
 
     @Autowired
-    public void setAuctionRecordService(AuctionRecordService auctionRecordService) {
-        this.auctionRecordService = auctionRecordService;
+    public void setNotificationService(NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 }

@@ -60,6 +60,9 @@
     <select id="queryProductByKeyWord" resultType="Product">
         SELECT * FROM product WHERE product.name LIKE #{keyWord}
     </select>
+    <select id="queryProductById" resultType="Product">
+        SELECT * FROM product WHERE product.id=#{id}
+    </select>
     <update id="shutdownComment">
         UPDATE product SET comment=FALSE WHERE id=#{id}
     </update>
