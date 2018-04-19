@@ -91,10 +91,9 @@ public interface UserService {
      * @param email
      * @param phone
      * @param password
-     * @param headImg
      * @return
      */
     boolean updateUser(String id, String location,
                        String email, String phone,
-                       String password, String headImg);
+                       String password);
 }

@@ -29,5 +29,5 @@ public interface UserMapper {
 
     int updateUser(@Param("id") String id, @Param("location") String location,
                    @Param("email") String email, @Param("phone") String phone,
-                   @Param("password") String password, @Param("headImg") String headImg);
+                   @Param("password") String password);
 }

@@ -74,8 +74,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUser(String id, String location, String email, String phone, String password, String headImg) {
-        return userMapper.updateUser(id, location, email, phone, password, headImg) > 0;
+    public boolean updateUser(String id, String location, String email, String phone, String password) {
+        return userMapper.updateUser(id, location, email, phone, password) > 0;
     }
 
     @Autowired

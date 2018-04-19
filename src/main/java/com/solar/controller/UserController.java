@@ -200,22 +200,9 @@ public class UserController {
     @ResponseBody
     public Response updateUser(@RequestParam("id") String id, @RequestParam("location") String location,
                                @RequestParam("email") String email, @RequestParam("phone") String phone,
-                               @RequestParam("password") String password, @RequestParam("headImg") MultipartFile headImg,
-                               HttpSession session) {
+                               @RequestParam("password") String password) {
         Response response = new Response();
-        String path = session.getServletContext().getRealPath(Constant.UPLOAD_DIRECTORY);
-        LOG.debug("path:" + path);
-        String headImgName = headImg.getOriginalFilename();
-        LOG.debug("headImg:" + headImgName);
-        String newHeadImgName = path + File.separator + UUIDGenerator.getUUID() + headImgName.substring(headImgName.indexOf('.'));
-        LOG.debug("newheadImgName:" + headImgName);
-        File file = new File(newHeadImgName);
-        try {
-            headImg.transferTo(file);
-        } catch (IOException e) {
-            LOG.error("文件写入错误！");
-        }
-        boolean result = userService.updateUser(id, location, email, phone, password, newHeadImgName);
+        boolean result = userService.updateUser(id, location, email, phone, password);
         if (result) {
             response.setFlag(Response.SUCCESS);
         } else {

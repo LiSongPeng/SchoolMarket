@@ -108,8 +108,7 @@ public class UserServiceTest extends BaseJunitTest {
         String email = "23432@ss.com";
         String phone = "43543543534";
         String password = "4354sdfsd";
-        String headImg = "ssss.png";
-        boolean result = userService.updateUser(id, location, email, phone, password, headImg);
+        boolean result = userService.updateUser(id, location, email, phone, password);
         Assert.assertTrue(result);
     }
 
