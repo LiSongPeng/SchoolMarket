@@ -216,9 +216,9 @@ public class ProductController {
     @RequestMapping("/updateProduct.do")
     @ResponseBody
     public Response updateProduct(@RequestParam("productId") String productId, @RequestParam("number") int number,
-                                  @RequestParam("price") int price, @RequestParam("category") String category) {
+                                  @RequestParam("price") int price) {
         Response response = new Response();
-        boolean result = productService.updateProduct(productId, number, price, category);
+        boolean result = productService.updateProduct(productId, number, price);
         if (result) {
             response.setFlag(Response.SUCCESS);
         } else {

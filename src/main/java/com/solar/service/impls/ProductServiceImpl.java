@@ -58,8 +58,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean updateProduct(String id, int number, int price, String category) {
-        return productMapper.updateProduct(id, number, price, category) > 0;
+    public boolean updateProduct(String id, int number, int price) {
+        return productMapper.updateProduct(id, number, price) > 0;
     }
 
     @Override

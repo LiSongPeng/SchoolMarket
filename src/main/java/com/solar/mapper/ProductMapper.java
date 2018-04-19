@@ -20,7 +20,7 @@ public interface ProductMapper {
     Product queryProductById(@Param("id") String id);
 
     int updateProduct(@Param("id") String id, @Param("number") int number,
-                      @Param("price") int price, @Param("category") String category);
+                      @Param("price") int price);
 
     int soldOut(@Param("id") String id);
 

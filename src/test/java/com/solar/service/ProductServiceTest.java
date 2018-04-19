@@ -79,8 +79,7 @@ public class ProductServiceTest extends BaseJunitTest {
         String productId = "adfadf";
         int number = 120;
         int price = 44;
-        String category = "adfasdfas";
-        Assert.assertTrue(productService.updateProduct(productId, number, price, category));
+        Assert.assertTrue(productService.updateProduct(productId, number, price));
     }
 
 

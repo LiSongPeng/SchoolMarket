@@ -69,10 +69,9 @@ public interface ProductService {
      * @param id
      * @param number
      * @param price
-     * @param category
      * @return
      */
-    boolean updateProduct(String id, int number, int price, String category);
+    boolean updateProduct(String id, int number, int price);
 
     /**
      * 根据商品类别查询商品
