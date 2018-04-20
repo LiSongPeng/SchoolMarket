@@ -4,50 +4,50 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solar.mapper.UserMapper">
     <resultMap id="userMap" type="User">
-        <id property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="gender" column="gender"/>
-        <result property="identify" column="identify"/>
-        <result property="location" column="location"/>
-        <result property="status" column="status"/>
-        <result property="email" column="email"/>
-        <result property="phone" column="phone"/>
-        <result property="registerTime" column="register_time"/>
-        <result property="lastLoginTime" column="last_login_time"/>
-        <result property="password" column="password"/>
-        <result property="headImg" column="head_img"/>
-        <result property="alipay" column="alipay"/>
+        <id property="id" column="user_id"/>
+        <result property="name" column="user_name"/>
+        <result property="gender" column="user_gender"/>
+        <result property="identify" column="user_identify"/>
+        <result property="location" column="user_location"/>
+        <result property="status" column="user_status"/>
+        <result property="email" column="user_email"/>
+        <result property="phone" column="user_phone"/>
+        <result property="registerTime" column="user_register_time"/>
+        <result property="lastLoginTime" column="user_last_login_time"/>
+        <result property="password" column="user_password"/>
+        <result property="headImg" column="user_head_img"/>
+        <result property="alipay" column="user_alipay"/>
     </resultMap>
     <select id="queryUser" resultMap="userMap">
-        SELECT * FROM user WHERE user.password=#{password}
-        AND user.phone=#{phoneOrEmail} OR user.email=#{phoneOrEmail}
+        SELECT * FROM user WHERE user.user_password=#{password}
+        AND user.user_phone=#{phoneOrEmail} OR user.user_email=#{phoneOrEmail}
     </select>
     <select id="queryPassword" resultType="java.lang.String">
-        SELECT user.password FROM user WHERE user.identify=#{identify}
-        AND user.phone=#{phoneOrEmail} OR user.email=#{phoneOrEmail}
+        SELECT user.user_password FROM user WHERE user.user_identify=#{identify}
+        AND user.user_phone=#{phoneOrEmail} OR user.user_email=#{phoneOrEmail}
     </select>
     <update id="updateLastLoginTime">
-        UPDATE user SET user.last_login_time=CURRENT_TIMESTAMP() WHERE user.id=#{id}
+        UPDATE user SET user.user_last_login_time=CURRENT_TIMESTAMP() WHERE user.user_id=#{id}
     </update>
     <insert id="addUser" parameterType="User">
-        INSERT INTO user(id, name, gender, identify, location, email, phone, password,head_img,alipay)  VALUES (#{user.id},#{user.name},#{user.gender},#{user.identify},
+        INSERT INTO user(user_id, user_name, user_gender, user_identify, user_location, user_email, user_phone, user_password,user_head_img,user_alipay)  VALUES (#{user.id},#{user.name},#{user.gender},#{user.identify},
         #{user.location},#{user.email},#{user.phone},#{user.password},#{user.headImg},#{user.alipay})
     </insert>
 
     <update id="updateUser">
-        UPDATE user SET location=#{location},email=#{email},phone=#{phone},
-        password=#{password} WHERE id=#{id}
+        UPDATE user SET user_location=#{location},user_email=#{email},user_phone=#{phone},
+        user_password=#{password} WHERE user_id=#{id}
     </update>
     <select id="queryUsers" resultMap="userMap">
         SELECT * FROM user
     </select>
     <select id="queryUserByEmail" resultMap="userMap">
-        SELECT * FROM user WHERE email=#{email}
+        SELECT * FROM user WHERE user_email=#{email}
     </select>
     <select id="queryUserByPhone" resultMap="userMap">
-        SELECT * FROM user WHERE phone=#{phone}
+        SELECT * FROM user WHERE user_phone=#{phone}
     </select>
     <select id="queryUserById" resultMap="userMap">
-        SELECT * FROM user WHERE id=#{id}
+        SELECT * FROM user WHERE user_id=#{id}
     </select>
 </mapper>

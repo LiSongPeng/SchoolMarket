@@ -4,40 +4,40 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solar.mapper.OrderMapper">
     <resultMap id="orderMap" type="Order">
-        <id property="id" column="id"/>
-        <result property="number" column="number"/>
-        <result property="orderTime" column="order_time"/>
-        <result property="finishTime" column="finish_time"/>
-        <result property="status" column="status"/>
-        <result property="price" column="price"/>
-        <result property="totalPrice" column="total_price"/>
-        <association property="user" column="user_id" resultMap="com.solar.mapper.UserMapper.userMap"/>
-        <association property="target" column="target" resultMap="com.solar.mapper.UserMapper.userMap"/>
-        <association property="product" column="product_id" resultMap="com.solar.mapper.ProductMapper.productMap"/>
+        <id property="id" column="order_id"/>
+        <result property="number" column="order_number"/>
+        <result property="orderTime" column="order_order_time"/>
+        <result property="finishTime" column="order_finish_time"/>
+        <result property="status" column="order_status"/>
+        <result property="price" column="order_price"/>
+        <result property="totalPrice" column="order_total_price"/>
+        <association property="user" column="order_user_id" resultMap="com.solar.mapper.UserMapper.userMap"/>
+        <association property="target" column="order_target" resultMap="com.solar.mapper.UserMapper.userMap"/>
+        <association property="product" column="order_product_id" resultMap="com.solar.mapper.ProductMapper.productMap"/>
     </resultMap>
     <insert id="addOrder">
-        INSERT INTO `order`(id, number, user_id, product_id,price,total_price,target) VALUES (#{id},#{number},
+        INSERT INTO `order`(order_id, order_number, order_user_id, order_product_id,order_price,order_total_price,order_target) VALUES (#{id},#{number},
         #{userId},#{productId},#{price},#{totalPrice},#{targetId})
     </insert>
     <update id="dispatchingOrder">
-        UPDATE `order` SET status=2 WHERE id=#{id}
+        UPDATE `order` SET order_status=2 WHERE order_id=#{id}
     </update>
     <update id="finishOrder">
-        UPDATE `order` SET status=3,finish_time=CURRENT_TIMESTAMP() WHERE id=#{id}
+        UPDATE `order` SET order_status=3,order_finish_time=CURRENT_TIMESTAMP() WHERE order_id=#{id}
     </update>
     <select id="queryOrderByUserId" resultMap="orderMap">
-        SELECT product.id,product.name,`order`.* FROM product,`order` WHERE `order`.user_id=#{userId} AND `order`.product_id=product.id
+        SELECT product.product_id,product.product_name,`order`.* FROM product,`order` WHERE `order`.order_user_id=#{userId} AND `order`.order_product_id=product.product_id
     </select>
     <select id="queryOrderByUserIdAndStatus" resultMap="orderMap">
-        SELECT product.id,product.name,`order`.* FROM product,`order` WHERE `order`.user_id=#{userId} AND `order`.status=#{status} AND `order`.product_id=product.id
+        SELECT product.product_id,product.product_name,`order`.* FROM product,`order` WHERE `order`.order_user_id=#{userId} AND `order`.order_status=#{status} AND `order`.order_product_id=product.product_id
     </select>
     <select id="queryOrderByTargetId" resultMap="orderMap">
-        SELECT product.id,product.name,`order`.* FROM product,`order` WHERE `order`.target=#{targetId} AND `order`.product_id=product.id
+        SELECT product.product_id,product.product_name,`order`.* FROM product,`order` WHERE `order`.order_target=#{targetId} AND `order`.order_product_id=product.product_id
     </select>
     <select id="queryOrderByTargetIdAndStatus" resultMap="orderMap">
-        SELECT product.id,product.name,`order`.* FROM product,`order` WHERE `order`.target=#{targetId} AND `order`.status=#{status} AND `order`.product_id=product.id
+        SELECT product.product_id,product.product_name,`order`.* FROM product,`order` WHERE `order`.order_target=#{targetId} AND `order`.order_status=#{status} AND `order`.order_product_id=product.product_id
     </select>
     <select id="queryTargetId" resultType="java.lang.String">
-        SELECT `order`.target FROM `order` WHERE id=#{id}
+        SELECT `order`.order_target FROM `order` WHERE order_id=#{id}
     </select>
 </mapper>

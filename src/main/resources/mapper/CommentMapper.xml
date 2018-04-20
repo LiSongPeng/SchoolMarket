@@ -4,25 +4,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solar.mapper.CommentMapper">
     <resultMap id="commentMap" type="Comment">
-        <id property="id" column="id"/>
-        <result property="content" column="content"/>
-        <result property="time" column="time"/>
-        <result property="like" column="like"/>
-        <result property="dislike" column="dislike"/>
+        <id property="id" column="comment_id"/>
+        <result property="content" column="comment_content"/>
+        <result property="time" column="comment_time"/>
+        <result property="like" column="comment_like"/>
+        <result property="dislike" column="comment_dislike"/>
         <association property="product" resultMap="com.solar.mapper.ProductMapper.productMap"
-                     column="product_id"></association>
-        <association property="user" resultMap="com.solar.mapper.UserMapper.userMap" column="user_id"></association>
+                     column="comment_product_id"></association>
+        <association property="user" resultMap="com.solar.mapper.UserMapper.userMap" column="comment_user_id"></association>
     </resultMap>
     <insert id="addComment">
-        INSERT INTO comment(id, content, product_id, user_id,level) VALUES (#{id},#{content},#{productId},#{userId},#{level})
+        INSERT INTO comment(comment_id, comment_content, comment_product_id, comment_user_id,comment_level) VALUES (#{id},#{content},#{productId},#{userId},#{level})
     </insert>
     <update id="increaseLikeById">
-        UPDATE comment SET `like`=`like`+1 WHERE id=#{id}
+        UPDATE comment SET comment_like=comment_like+1 WHERE comment_id=#{id}
     </update>
     <update id="increaseDislikeById">
-        UPDATE comment SET dislike=dislike+1 WHERE id=#{id}
+        UPDATE comment SET comment_dislike=comment_dislike+1 WHERE comment_id=#{id}
     </update>
     <select id="queryComments" resultMap="commentMap">
-        SELECT user.id,user.name,user.head_img,comment.* FROM comment,user WHERE comment.product_id=#{productId} AND comment.user_id=user.id ORDER BY comment.time
+        SELECT user.user_id,user.user_name,user.user_head_img,comment.* FROM comment,user WHERE comment.comment_product_id=#{productId} AND comment.comment_user_id=user.user_id ORDER BY comment.comment_time
     </select>
 </mapper>

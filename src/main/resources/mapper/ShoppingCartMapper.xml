@@ -4,24 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solar.mapper.ShoppingCartMapper">
     <resultMap id="shoppingCartMap" type="ShoppingCart">
-        <id property="id" column="id"/>
-        <result property="number" column="number"/>
-        <result property="addTime" column="add_time"/>
-        <association property="user" column="user_id" resultMap="com.solar.mapper.UserMapper.userMap"/>
-        <association property="product" column="product_id" resultMap="com.solar.mapper.ProductMapper.productMap"/>
+        <id property="id" column="shoppingcart_id"/>
+        <result property="number" column="shoppingcart_number"/>
+        <result property="addTime" column="shoppingcart_add_time"/>
+        <association property="user" column="shoppingcart_user_id" resultMap="com.solar.mapper.UserMapper.userMap"/>
+        <association property="product" column="shoppingcart_product_id" resultMap="com.solar.mapper.ProductMapper.productMap"/>
     </resultMap>
     <select id="queryByUserId" resultMap="shoppingCartMap">
-        SELECT product.product_id,product.name,product.imga,shoppingcart.*
-        FROM product,shoppingcart WHERE shoppingcart.user_id=#{userId}
-        AND shoppingcart.product_id=product.id ORDER BY shoppingcart.add_time
+        SELECT product.product_id,product.product_name,product.product_imga,shoppingcart.*
+        FROM product,shoppingcart WHERE shoppingcart.shoppingcart_user_id=#{userId}
+        AND shoppingcart.shoppingcart_product_id=product.product_id ORDER BY shoppingcart.shoppingcart_add_time
     </select>
     <update id="updateNumber">
-        UPDATE shoppingcart SET number=#{number} WHERE id=#{id}
+        UPDATE shoppingcart SET shoppingcart_number=#{number} WHERE shoppingcart_id=#{id}
     </update>
     <delete id="removeShoppingCart">
-        DELETE FROM shoppingcart WHERE id=#{id}
+        DELETE FROM shoppingcart WHERE shoppingcart_id=#{id}
     </delete>
     <insert id="addShoppingCart">
-        INSERT INTO shoppingcart(id,number,user_id,product_id) VALUES (#{id},#{number},#{userId},#{productId})
+        INSERT INTO shoppingcart(shoppingcart_id,shoppingcart_number,shoppingcart_user_id,shoppingcart_product_id) VALUES (#{id},#{number},#{userId},#{productId})
     </insert>
 </mapper>

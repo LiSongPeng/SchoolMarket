@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solar.mapper.CategoryMapper">
     <resultMap id="categoryMap" type="Category">
-        <id property="id" column="id"/>
-        <result property="name" column="name"/>
+        <id property="id" column="category_id"/>
+        <result property="name" column="category_name"/>
     </resultMap>
     <select id="queryAll" resultMap="categoryMap">
         SELECT * FROM category

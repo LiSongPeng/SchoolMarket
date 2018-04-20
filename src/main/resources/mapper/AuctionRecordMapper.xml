@@ -4,20 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solar.mapper.AuctionRecordMapper">
     <resultMap id="auctionRecordMap" type="AuctionRecord">
-        <id property="id" column="id"/>
-        <result property="price" column="price"/>
-        <result property="time" column="time"/>
-        <association property="user" column="user_id" resultMap="com.solar.mapper.UserMapper.userMap"/>
-        <association property="product" column="product_id" resultMap="com.solar.mapper.ProductMapper.productMap"/>
+        <id property="id" column="auction_id"/>
+        <result property="price" column="auction_price"/>
+        <result property="time" column="auction_time"/>
+        <association property="user" column="auction_user_id" resultMap="com.solar.mapper.UserMapper.userMap"/>
+        <association property="product" column="auction_product_id" resultMap="com.solar.mapper.ProductMapper.productMap"/>
     </resultMap>
     <insert id="addAuctionRecord">
-        INSERT INTO auction_record(id, price, user_id, product_id) VALUES (#{id},
+        INSERT INTO auction_record(auction_id, auction_price, auction_user_id, auction_product_id) VALUES (#{id},
         #{price},#{userId},#{productId})
     </insert>
     <select id="queryAuctionRecordByProductId" resultMap="auctionRecordMap">
-        SELECT auction_record.* ,user.id,user.name,user.head_img,FROM auction_record,user WHERE auction_record.product_id=#{productId} AND user.id=auction_record.user_id ORDER BY auction_record."price" DESC
+        SELECT auction_record.* ,user.user_id,user.user_name,user.user_head_img,FROM auction_record,user WHERE auction_record.auction_product_id=#{productId} AND user.user_id=auction_record.auction_user_id ORDER BY auction_record.auction_price DESC
     </select>
     <delete id="deleteAuctionRecordsByProductId">
-        DELETE FROM auction_record WHERE product_id=#{productId}
+        DELETE FROM auction_record WHERE auction_product_id=#{productId}
     </delete>
 </mapper>
