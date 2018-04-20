@@ -37,19 +37,19 @@
         UPDATE product SET price=#{price},number=#{number} WHERE id=#{id}
     </update>
     <select id="queryProductByType" resultMap="productMap">
-        SELECT * FROM product WHERE type=#{type}
+        SELECT category.*,product.* FROM category,product WHERE product.type=#{type} AND product.category_id=category.id
     </select>
 
     <select id="queryAll" resultMap="productMap">
-        SELECT * FROM product
+        SELECT category.*,product.* FROM category,product WHERE product.category_id=category.id
     </select>
 
     <select id="queryProductByCategoryId" resultMap="productMap">
-        SELECT * FROM product WHERE category_id=#{categoryId}
+        SELECT category.*,product.* FROM category,product WHERE product.category_id=#{categoryId} AND product.category_id=category.id
     </select>
 
     <select id="queryProductByUserIdAndStatus" resultMap="productMap">
-        SELECT * FROM product WHERE publisher=#{userId} AND status=#{status}
+        SELECT category.*,product.* FROM category,product WHERE product.publisher=#{userId} AND product.status=#{status} AND product.category_id=category.id
     </select>
     <update id="soldOut">
         UPDATE product SET status=3 WHERE id=#{id}/*商品下架*/
@@ -58,10 +58,11 @@
         SELECT product.name FROM product WHERE product.name LIKE #{keyWord}
     </select>
     <select id="queryProductByKeyWord" resultMap="productMap">
-        SELECT * FROM product WHERE product.name LIKE #{keyWord}
+        SELECT category.*,product.* FROM category,product WHERE product.name LIKE #{keyWord} AND product.category_id=category.id
     </select>
     <select id="queryProductById" resultMap="productMap">
-        SELECT * FROM product WHERE product.id=#{id}
+        SELECT user.id,user.name,user.head_img,category.*,product.* FROM category,product,user
+         WHERE product.id=#{id} AND product.category_id=category.id AND product.publisher=user.id
     </select>
     <update id="shutdownComment">
         UPDATE product SET comment=FALSE WHERE id=#{id}
@@ -73,6 +74,6 @@
         UPDATE product SET number=number-#{number}
     </update>
     <select id="queryProductByUserId" resultMap="productMap">
-        SELECT * FROM product WHERE publisher=#{userId}
+        SELECT category.*,product.* FROM category,product WHERE product.publisher=#{userId} AND product.category_id=category.id
     </select>
 </mapper>

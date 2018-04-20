@@ -11,7 +11,6 @@
         <association property="product" column="product_id" resultMap="com.solar.mapper.ProductMapper.productMap"/>
     </resultMap>
     <select id="queryByUserId" resultMap="shoppingCartMap">
---         SELECT * FROM shoppingcart WHERE user_id=#{userId} ORDER BY add_time
         SELECT product.product_id,product.name,product.imga,shoppingcart.*
         FROM product,shoppingcart WHERE shoppingcart.user_id=#{userId}
         AND shoppingcart.product_id=product.id ORDER BY shoppingcart.add_time

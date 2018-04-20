@@ -26,16 +26,16 @@
         UPDATE `order` SET status=3,finish_time=CURRENT_TIMESTAMP() WHERE id=#{id}
     </update>
     <select id="queryOrderByUserId" resultMap="orderMap">
-        SELECT * FROM `order` WHERE user_id=#{userId}
+        SELECT product.id,product.name,`order`.* FROM product,`order` WHERE `order`.user_id=#{userId} AND `order`.product_id=product.id
     </select>
     <select id="queryOrderByUserIdAndStatus" resultMap="orderMap">
-        SELECT * FROM `order` WHERE user_id=#{userId} AND status=#{status}
+        SELECT product.id,product.name,`order`.* FROM product,`order` WHERE `order`.user_id=#{userId} AND `order`.status=#{status} AND `order`.product_id=product.id
     </select>
     <select id="queryOrderByTargetId" resultMap="orderMap">
-        SELECT * FROM `order` WHERE target=#{targetId}
+        SELECT product.id,product.name,`order`.* FROM product,`order` WHERE `order`.target=#{targetId} AND `order`.product_id=product.id
     </select>
     <select id="queryOrderByTargetIdAndStatus" resultMap="orderMap">
-        SELECT * FROM `order` WHERE target=#{targetId} AND status=#{status}
+        SELECT product.id,product.name,`order`.* FROM product,`order` WHERE `order`.target=#{targetId} AND `order`.status=#{status} AND `order`.product_id=product.id
     </select>
     <select id="queryTargetId" resultType="java.lang.String">
         SELECT `order`.target FROM `order` WHERE id=#{id}

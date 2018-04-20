@@ -23,7 +23,6 @@
         UPDATE comment SET dislike=dislike+1 WHERE id=#{id}
     </update>
     <select id="queryComments" resultMap="commentMap">
-        SELECT user.id,user.name,user.head_img,comment.* FROM comment,user WHERE product_id=#{productId} AND comment.user_id=user.id ORDER BY comment.time
---         SELECT  comment.* FROM comment WHERE product_id=#{productId} ORDER BY comment.time
+        SELECT user.id,user.name,user.head_img,comment.* FROM comment,user WHERE comment.product_id=#{productId} AND comment.user_id=user.id ORDER BY comment.time
     </select>
 </mapper>
