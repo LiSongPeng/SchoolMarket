@@ -102,6 +102,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<String> getProductNames(String keyWord) {
         keyWord = "%" + keyWord + "%";
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(1, 20);
         return productMapper.queryProductNameByKeyWord(keyWord);
     }
 
