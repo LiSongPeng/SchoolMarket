@@ -13,11 +13,10 @@ public interface OrderService {
      * @param number
      * @param userId
      * @param productId
-     * @param price
      * @param targetId
      * @return
      */
-    boolean order(int number, String userId, String productId, int price, String targetId);
+    boolean order(int number, String userId, String productId, String targetId);
 
     /**
      * 确认订单发货

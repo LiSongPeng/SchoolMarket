@@ -149,6 +149,7 @@ public interface ProductService {
 
     /**
      * 根据发布人查找商品
+     *
      * @param userId
      * @param pageNumber
      * @param pageSize
@@ -158,8 +159,17 @@ public interface ProductService {
 
     /**
      * 开启评论功能
+     *
      * @param productId
      * @return
      */
     boolean turnOnComment(String productId);
+
+    /**
+     * 根据商品id获取商品
+     *
+     * @param id
+     * @return
+     */
+    Product getProductById(String id);
 }

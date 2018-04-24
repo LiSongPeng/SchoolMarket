@@ -24,16 +24,16 @@ public class OrderServiceImpl implements OrderService {
     private NotificationMapper notificationMapper;
 
     @Override
-    public boolean order(int number, String userId, String productId, int price, String targetId) {
+    public boolean order(int number, String userId, String productId, String targetId) {
         Product product = productMapper.queryProductById(productId);
         if (number > product.getNumber()) {
             return false;
         }
-        int totalPrice = number * price;
+        int totalPrice = number * product.getPrice();
         if (productMapper.decreaseNumber(number) == 0) {
             return false;
         }
-        if (orderMapper.addOrder(UUIDGenerator.getUUID(), number, userId, productId, price, totalPrice, targetId) > 0) {
+        if (orderMapper.addOrder(UUIDGenerator.getUUID(), number, userId, productId, product.getPrice(), totalPrice, targetId) > 0) {
             String title = "您的商品有了一份新订单!";
             String content = "您的名为：" + product.getName() + "的商品有了一份新订单！";
             notificationMapper.addNotification(UUIDGenerator.getUUID(), title, content, targetId);

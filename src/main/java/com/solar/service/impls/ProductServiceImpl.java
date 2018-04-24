@@ -134,6 +134,11 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.turnOnComment(productId) > 0;
     }
 
+    @Override
+    public Product getProductById(String id) {
+        return productMapper.queryProductById(id);
+    }
+
     @Autowired
     public void setCategoryMapper(CategoryMapper categoryMapper) {
         this.categoryMapper = categoryMapper;

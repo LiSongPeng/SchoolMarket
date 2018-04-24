@@ -8,12 +8,13 @@
         <result property="number" column="shoppingcart_number"/>
         <result property="addTime" column="shoppingcart_add_time"/>
         <association property="user" column="shoppingcart_user_id" resultMap="com.solar.mapper.UserMapper.userMap"/>
-        <association property="product" column="shoppingcart_product_id" resultMap="com.solar.mapper.ProductMapper.productMap"/>
+        <association property="product" column="shoppingcart_product_id"
+                     resultMap="com.solar.mapper.ProductMapper.productMap"/>
     </resultMap>
     <select id="queryByUserId" resultMap="shoppingCartMap">
-        SELECT product.product_id,product.product_name,product.product_imga,shoppingcart.*
+        SELECT product.product_id,product.product_name,product.product_imga,product.product_price,shoppingcart.*
         FROM product,shoppingcart WHERE shoppingcart.shoppingcart_user_id=#{userId}
-        AND shoppingcart.shoppingcart_product_id=product.product_id ORDER BY shoppingcart.shoppingcart_add_time
+        AND shoppingcart.shoppingcart_product_id=product.product_id
     </select>
     <update id="updateNumber">
         UPDATE shoppingcart SET shoppingcart_number=#{number} WHERE shoppingcart_id=#{id}

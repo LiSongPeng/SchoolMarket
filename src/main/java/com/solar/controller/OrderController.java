@@ -23,10 +23,9 @@ public class OrderController {
     @RequestMapping("/order.do")
     @ResponseBody
     public Response order(@RequestParam("number") int number, @RequestParam("userId") String userId,
-                          @RequestParam("productId") String productId, @RequestParam("price") int price,
-                          @RequestParam("targetId") String targetId) {
+                          @RequestParam("productId") String productId, @RequestParam("targetId") String targetId) {
         Response response = new Response();
-        boolean result = orderService.order(number, userId, productId, price, targetId);
+        boolean result = orderService.order(number, userId, productId, targetId);
         if (result) {
             response.setFlag(Response.SUCCESS);
         } else {

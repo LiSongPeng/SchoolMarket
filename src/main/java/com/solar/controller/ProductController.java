@@ -307,6 +307,20 @@ public class ProductController {
         return response;
     }
 
+    @RequestMapping("/getById.do")
+    @ResponseBody
+    public Response<Product> getProductById(@RequestParam("id") String id) {
+        Response<Product> response = new Response<>();
+        Product product = productService.getProductById(id);
+        if (product != null) {
+            response.setFlag(Response.SUCCESS);
+            response.setData(product);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;

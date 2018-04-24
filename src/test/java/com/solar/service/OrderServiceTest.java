@@ -19,7 +19,7 @@ public class OrderServiceTest extends BaseJunitTest {
         String productId = "adfadf";
         int price = 23;
         String targetId = "234234324234";
-        Assert.assertTrue(orderService.order(number, userId, productId, price, targetId));
+        Assert.assertTrue(orderService.order(number, userId, productId, targetId));
     }
 
     @Test

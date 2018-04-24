@@ -67,7 +67,7 @@ public class ShoppingCartController {
                                                                @RequestParam("pageSize") int pageSize,
                                                                @RequestParam("pageNumber") int pageNumber) {
         Response<PageInfo<ShoppingCart>> response = new Response<>();
-        PageInfo<ShoppingCart> list = shoppingCartService.queryByUserId(userId, pageSize, pageNumber);
+        PageInfo<ShoppingCart> list = shoppingCartService.queryByUserId(userId, pageNumber, pageSize);
         if (list != null) {
             response.setFlag(Response.SUCCESS);
             response.setData(list);
