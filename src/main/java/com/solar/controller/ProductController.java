@@ -116,9 +116,8 @@ public class ProductController {
         String[] imgNames = new String[imgs.length];
         for (int i = 0; i < imgNames.length; i++) {
             String imgName = imgs[i].getOriginalFilename();
-            String uuid = UUIDGenerator.getUUID();
-            imgNames[i] = Constant.UPLOAD_DIRECTORY + "/" + uuid + imgName.substring(imgName.indexOf('.'));
-            File file = new File(path + File.separator + uuid + imgName.substring(imgName.indexOf('.')));
+            imgNames[i] = UUIDGenerator.getUUID() + imgName.substring(imgName.indexOf('.'));
+            File file = new File(path + File.separator + imgNames[i]);
             try {
                 imgs[i].transferTo(file);
             } catch (IOException e) {
@@ -139,16 +138,16 @@ public class ProductController {
         user.setId(userId);
         product.setPublisher(user);
         if (imgNames[0] != null) {
-            product.setImga(imgNames[0]);
+            product.setImga(Constant.UPLOAD_DIRECTORY + "/" + imgNames[0]);
         }
         if (imgNames[1] != null) {
-            product.setImgb(imgNames[1]);
+            product.setImgb(Constant.UPLOAD_DIRECTORY + "/" + imgNames[1]);
         }
         if (imgNames[2] != null) {
-            product.setImgc(imgNames[2]);
+            product.setImgc(Constant.UPLOAD_DIRECTORY + "/" + imgNames[2]);
         }
         if (imgNames[3] != null) {
-            product.setImgd(imgNames[3]);
+            product.setImgd(Constant.UPLOAD_DIRECTORY + "/" + imgNames[3]);
         }
         boolean result = productService.addProduct(product);
         if (result) {

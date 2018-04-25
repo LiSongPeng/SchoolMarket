@@ -66,7 +66,8 @@ public class UserController {
         return response;
     }
 
-    @PostMapping("/register.do")
+    @PostMapping(value = "/register.do", produces = "text/html;charset=UTF-8")
+    @ResponseBody
     public String register(@RequestParam("realName") String realName, @RequestParam("gender") int gender,
                            @RequestParam("identify") String identify, @RequestParam("location") String location, @RequestParam("email") String email
             , @RequestParam("phone") String phone, @RequestParam("password") String password, @RequestParam("headImg") MultipartFile headImg, @RequestParam("alipay") MultipartFile alipay, HttpSession session) {
@@ -79,26 +80,26 @@ public class UserController {
         LOG.debug("path:" + path);
         String headImgName = headImg.getOriginalFilename();
         LOG.debug("headImg:" + headImgName);
-        String newHeadImgName = path + File.separator + UUIDGenerator.getUUID() + headImgName.substring(headImgName.indexOf('.'));
+        String newHeadImgName = UUIDGenerator.getUUID() + headImgName.substring(headImgName.indexOf('.'));
         LOG.debug("newheadImgName:" + headImgName);
-        File file = new File(newHeadImgName);
+        File file = new File(path + File.separator + newHeadImgName);
         try {
             headImg.transferTo(file);
         } catch (IOException e) {
             return "注册失败，请稍后重试！";
         }
-        user.setHeadImg(newHeadImgName);
+        user.setHeadImg(Constant.UPLOAD_DIRECTORY + "/" + newHeadImgName);
         String alipayName = alipay.getOriginalFilename();
         LOG.debug("alipayName:" + alipayName);
         String newAlipayName = UUIDGenerator.getUUID() + alipayName.substring(alipayName.indexOf('.'));
         LOG.debug("newAliPayName:" + newAlipayName);
-        file = new File(newAlipayName);
+        file = new File(path + File.separator + newAlipayName);
         try {
             alipay.transferTo(file);
         } catch (IOException e) {
             return "注册失败，请稍后重试！";
         }
-        user.setAlipay(newAlipayName);
+        user.setAlipay(Constant.UPLOAD_DIRECTORY + "/" + newAlipayName);
         user.setIdentify(identify);
         user.setLocation(location);
         user.setPassword(password);
