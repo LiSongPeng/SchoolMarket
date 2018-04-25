@@ -100,22 +100,25 @@ public class ProductController {
         return response;
     }
 
-    @PostMapping("/addProduct.do")
+    @PostMapping(value = "/addProduct.do", produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public Response addProduct(@RequestParam("name") String name, @RequestParam("price") int price,
-                               @RequestParam("disc") String disc,
-                               @RequestParam("type") int type,
-                               @RequestParam("CategoryId") String categoryId,
-                               @RequestParam("number") int number,
-                               @RequestParam("userId") String userId,
-                               @RequestParam("imgs") MultipartFile[] imgs, HttpSession session) {
-        Response response = new Response();
+    public String addProduct(@RequestParam("name") String name, @RequestParam("price") int price,
+                             @RequestParam("disc") String disc,
+                             @RequestParam("type") int type,
+                             @RequestParam("categoryId") String categoryId,
+                             @RequestParam("number") int number,
+                             @RequestParam("userId") String userId,
+                             @RequestParam("imgs") MultipartFile[] imgs, HttpSession session) {
+        if (imgs.length != 4) {
+            return "请上传四张图片！";
+        }
         String path = session.getServletContext().getRealPath(Constant.UPLOAD_DIRECTORY);
         String[] imgNames = new String[imgs.length];
         for (int i = 0; i < imgNames.length; i++) {
             String imgName = imgs[i].getOriginalFilename();
-            imgNames[i] = path + File.separator + UUIDGenerator.getUUID() + imgName.substring(imgName.indexOf('.'));
-            File file = new File(imgNames[i]);
+            String uuid = UUIDGenerator.getUUID();
+            imgNames[i] = Constant.UPLOAD_DIRECTORY + "/" + uuid + imgName.substring(imgName.indexOf('.'));
+            File file = new File(path + File.separator + uuid + imgName.substring(imgName.indexOf('.')));
             try {
                 imgs[i].transferTo(file);
             } catch (IOException e) {
@@ -135,17 +138,24 @@ public class ProductController {
         User user = new User();
         user.setId(userId);
         product.setPublisher(user);
-        product.setImga(imgNames[0]);
-        product.setImgb(imgNames[1]);
-        product.setImgc(imgNames[2]);
-        product.setImgd(imgNames[3]);
+        if (imgNames[0] != null) {
+            product.setImga(imgNames[0]);
+        }
+        if (imgNames[1] != null) {
+            product.setImgb(imgNames[1]);
+        }
+        if (imgNames[2] != null) {
+            product.setImgc(imgNames[2]);
+        }
+        if (imgNames[3] != null) {
+            product.setImgd(imgNames[3]);
+        }
         boolean result = productService.addProduct(product);
         if (result) {
-            response.setFlag(Response.SUCCESS);
+            return "商品发布成功！";
         } else {
-            response.setFlag(Response.FAIL);
+            return "商品发布失败！";
         }
-        return response;
     }
 
     @RequestMapping("/getProductNumber.do")
@@ -218,7 +228,7 @@ public class ProductController {
     public Response<PageInfo<Product>> getByKeyWordAndCategory(@RequestParam("keyWord") String keyWord, @RequestParam("pageNumber") int pageNumber,
                                                                @RequestParam("pageSize") int pageSize, @RequestParam("category") String category) {
         Response<PageInfo<Product>> response = new Response<>();
-        PageInfo<Product> list = productService.queryProductByKeyWordAndCategory(keyWord, pageNumber, pageSize,category);
+        PageInfo<Product> list = productService.queryProductByKeyWordAndCategory(keyWord, pageNumber, pageSize, category);
         if (list != null) {
             response.setFlag(Response.SUCCESS);
             response.setData(list);
