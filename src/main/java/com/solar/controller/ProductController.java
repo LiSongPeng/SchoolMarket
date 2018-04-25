@@ -213,6 +213,21 @@ public class ProductController {
         return response;
     }
 
+    @RequestMapping("/getByKeyWordAndCategory.do")
+    @ResponseBody
+    public Response<PageInfo<Product>> getByKeyWordAndCategory(@RequestParam("keyWord") String keyWord, @RequestParam("pageNumber") int pageNumber,
+                                                               @RequestParam("pageSize") int pageSize, @RequestParam("category") String category) {
+        Response<PageInfo<Product>> response = new Response<>();
+        PageInfo<Product> list = productService.queryProductByKeyWordAndCategory(keyWord, pageNumber, pageSize,category);
+        if (list != null) {
+            response.setFlag(Response.SUCCESS);
+            response.setData(list);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
     @RequestMapping("/updateProduct.do")
     @ResponseBody
     public Response updateProduct(@RequestParam("productId") String productId, @RequestParam("number") int number,

@@ -172,4 +172,15 @@ public interface ProductService {
      * @return
      */
     Product getProductById(String id);
+
+    /**
+     * 根据关键字和类别查询商品
+     *
+     * @param keyWord
+     * @param pageNumber
+     * @param pageSize
+     * @param category
+     * @return
+     */
+    PageInfo<Product> queryProductByKeyWordAndCategory(String keyWord, int pageNumber, int pageSize, String category);
 }

@@ -44,4 +44,6 @@ public interface ProductMapper {
     List<Product> queryProductByUserId(@Param("userId") String userId);
 
     int turnOnComment(@Param("productId") String productId);
+
+    List<Product> queryProductByKeyWordAndCategory(@Param("keyWord") String keyWord, @Param("category") String category);
 }

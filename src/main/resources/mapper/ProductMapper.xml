@@ -61,6 +61,9 @@
     <select id="queryProductByKeyWord" resultMap="productMap">
         SELECT category.*,product.* FROM category,product WHERE product.product_name LIKE #{keyWord} AND product.product_category_id=category.category_id
     </select>
+    <select id="queryProductByKeyWordAndCategory" resultMap="productMap">
+        SELECT category.*,product.* FROM category,product WHERE product.product_name LIKE #{keyWord} AND product.product_category_id=#{category} AND product.product_category_id=category.category_id
+    </select>
     <select id="queryProductById" resultMap="productMap">
         SELECT user.user_id,user.user_name,user.user_head_img,user.user_alipay,category.*,product.* FROM category,product,user
          WHERE product.product_id=#{id} AND product.product_category_id=category.category_id AND product.product_publisher=user.user_id

@@ -139,6 +139,15 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.queryProductById(id);
     }
 
+    @Override
+    public PageInfo<Product> queryProductByKeyWordAndCategory(String keyWord, int pageNumber, int pageSize, String category) {
+        keyWord = "%" + keyWord + "%";
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.startPage(pageNumber, pageSize);
+        List<Product> list = productMapper.queryProductByKeyWordAndCategory(keyWord, category);
+        return new PageInfo<>(list);
+    }
+
     @Autowired
     public void setCategoryMapper(CategoryMapper categoryMapper) {
         this.categoryMapper = categoryMapper;
