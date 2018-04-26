@@ -6,7 +6,6 @@ import com.solar.service.interfaces.UserService;
 import com.solar.utils.Constant;
 import com.solar.utils.UUIDGenerator;
 import com.solar.vo.Response;
-import com.solar.vo.UserView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +32,8 @@ public class UserController {
 
     @GetMapping("/login.do")
     @ResponseBody
-    public Response<UserView> login(@RequestParam("phoneOrEmail") String phoneOrEmail, @RequestParam("password") String password) {
-        Response<UserView> response = new Response<>();
+    public Response<User> login(@RequestParam("phoneOrEmail") String phoneOrEmail, @RequestParam("password") String password) {
+        Response<User> response = new Response<>();
         User user = userService.login(phoneOrEmail, password);
         if (user == null) {
             response.setFlag(Response.FAIL);
@@ -45,7 +44,7 @@ public class UserController {
         } else {
             response.setFlag(Response.SUCCESS);
             response.setMessage("登录成功!");
-            response.setData(getUserView(user));
+            response.setData(user);
         }
         return response;
     }
@@ -131,12 +130,12 @@ public class UserController {
 
     @GetMapping("/getByEmail.do")
     @ResponseBody
-    public Response<UserView> getByEmail(@RequestParam("email") String email) {
-        Response<UserView> response = new Response<>();
+    public Response<User> getByEmail(@RequestParam("email") String email) {
+        Response<User> response = new Response<>();
         User user = userService.getUserByEmail(email);
         if (user != null) {
             response.setFlag(Response.SUCCESS);
-            response.setData(getUserView(user));
+            response.setData(user);
         } else {
             response.setFlag(Response.FAIL);
         }
@@ -145,12 +144,12 @@ public class UserController {
 
     @GetMapping("/getByPhone.do")
     @ResponseBody
-    public Response<UserView> getByPhone(@RequestParam("phone") String phone) {
-        Response<UserView> response = new Response<>();
+    public Response<User> getByPhone(@RequestParam("phone") String phone) {
+        Response<User> response = new Response<>();
         User user = userService.getUserByPhone(phone);
         if (user != null) {
             response.setFlag(Response.SUCCESS);
-            response.setData(getUserView(user));
+            response.setData(user);
         } else {
             response.setFlag(Response.FAIL);
         }
@@ -159,12 +158,12 @@ public class UserController {
 
     @GetMapping("/getById.do")
     @ResponseBody
-    public Response<UserView> getById(@RequestParam("id") String id) {
-        Response<UserView> response = new Response<>();
+    public Response<User> getById(@RequestParam("id") String id) {
+        Response<User> response = new Response<>();
         User user = userService.getUserById(id);
         if (user != null) {
             response.setFlag(Response.SUCCESS);
-            response.setData(getUserView(user));
+            response.setData(user);
         } else {
             response.setFlag(Response.FAIL);
         }
@@ -189,22 +188,5 @@ public class UserController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
-    }
-
-    private UserView getUserView(User user) {
-        UserView userView = new UserView();
-        userView.setId(user.getId());
-        userView.setEmail(user.getEmail());
-        userView.setGender(user.getGender());
-        userView.setIdentify(user.getIdentify());
-        userView.setLastLoginTime(user.getLastLoginTime());
-        userView.setLocation(user.getLocation());
-        userView.setName(user.getName());
-        userView.setPhone(user.getPhone());
-        userView.setRegisterTime(user.getRegisterTime());
-        userView.setStatus(user.getStatus());
-        userView.setHeadImg(user.getHeadImg());
-        userView.setAlipay(user.getAlipay());
-        return userView;
     }
 }

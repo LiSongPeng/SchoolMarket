@@ -40,7 +40,7 @@ public class AuctionRecordController {
                                                                 @RequestParam("pageSize") int pageSize,
                                                                 @RequestParam("pageNumber") int pageNumber) {
         Response<PageInfo<AuctionRecord>> response = new Response<>();
-        PageInfo<AuctionRecord> list =auctionRecordService.queryAuctionRecords(productId, pageSize, pageNumber);
+        PageInfo<AuctionRecord> list = auctionRecordService.queryAuctionRecords(productId, pageNumber, pageSize);
         if (list != null) {
             response.setFlag(Response.SUCCESS);
             response.setData(list);

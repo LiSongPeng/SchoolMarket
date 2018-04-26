@@ -34,6 +34,21 @@ public class OrderController {
         return response;
     }
 
+    @RequestMapping("/auctionDeal.do")
+    @ResponseBody
+    public Response auctionDeal(@RequestParam("userId") String userId,
+                                @RequestParam("productId") String productId,
+                                @RequestParam("auctionPrice") int auctionPrice) {
+        Response response = new Response();
+        boolean result = orderService.auctionDeal(userId, productId, auctionPrice);
+        if (result) {
+            response.setFlag(Response.SUCCESS);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
+
     @RequestMapping("/confirmDispatching.do")
     @ResponseBody
     public Response confirmDispatching(@RequestParam("orderId") String orderId) {
@@ -46,6 +61,7 @@ public class OrderController {
         }
         return response;
     }
+
     @RequestMapping("/confirmPay.do")
     @ResponseBody
     public Response confirmPay(@RequestParam("orderId") String orderId) {

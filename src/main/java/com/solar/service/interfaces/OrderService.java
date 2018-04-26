@@ -82,4 +82,13 @@ public interface OrderService {
      * @return
      */
     boolean confirmPay(String orderId);
+
+    /**
+     * 达成拍卖
+     * @param userId
+     * @param productId
+     * @param auctionPrice
+     * @return
+     */
+    boolean auctionDeal(String userId, String productId, int auctionPrice);
 }

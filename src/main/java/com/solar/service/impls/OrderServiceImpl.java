@@ -96,6 +96,26 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.payOrder(orderId) > 0;
     }
 
+    @Override
+    public boolean auctionDeal(String userId, String productId, int auctionPrice) {
+        Product product = productMapper.queryProductById(productId);
+        if (product == null) {
+            return false;
+        }
+        String id = UUIDGenerator.getUUID();
+        String targetId = product.getPublisher().getId();
+        if (orderMapper.addAuctionOrder(id, product.getNumber(),
+                userId, productId, product.getPrice(), auctionPrice, targetId) > 0) {
+            id = UUIDGenerator.getUUID();
+            String title = "商品竞拍新动态！";
+            String content = "您成功竞拍了名为：" + product.getName() + "的拍卖品，请进入我的订单页面进行支付！";
+            notificationMapper.addNotification(id, title, content, userId);
+            productMapper.soldOut(productId);
+            return true;
+        }
+        return false;
+    }
+
     @Autowired
     public void setOrderMapper(OrderMapper orderMapper) {
         this.orderMapper = orderMapper;

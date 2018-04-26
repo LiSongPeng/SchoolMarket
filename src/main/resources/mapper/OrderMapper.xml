@@ -20,6 +20,10 @@
         INSERT INTO `order`(order_id, order_number, order_user_id, order_product_id,order_price,order_total_price,order_target) VALUES (#{id},#{number},
         #{userId},#{productId},#{price},#{totalPrice},#{targetId})
     </insert>
+    <insert id="addAuctionOrder">
+        INSERT INTO `order`(order_id, order_number, order_user_id, order_product_id,order_price,order_total_price,order_target,order_status) VALUES (#{id},#{number},
+        #{userId},#{productId},#{price},#{totalPrice},#{targetId},4)
+    </insert>
     <update id="dispatchingOrder">
         UPDATE `order` SET order_status=2 WHERE order_id=#{id}
     </update>
@@ -31,19 +35,19 @@
     </update>
     <select id="queryOrderByUserId" resultMap="orderMap">
         SELECT user.user_email,user.user_phone,user.user_name,product.product_id,product.product_name,`order`.* FROM product,`order`,user
-         WHERE `order`.order_user_id=#{userId} AND `order`.order_product_id=product.product_id AND `order`.order_user_id=user.user_id
+         WHERE `order`.order_user_id=#{userId} AND `order`.order_product_id=product.product_id AND `order`.order_target=user.user_id
     </select>
     <select id="queryOrderByUserIdAndStatus" resultMap="orderMap">
         SELECT user.user_email,user.user_phone,user.user_name,product.product_id,product.product_name,`order`.* FROM product,`order`,user
-         WHERE `order`.order_user_id=#{userId} AND `order`.order_status=#{status} AND `order`.order_product_id=product.product_id AND `order`.order_user_id=user.user_id
+         WHERE `order`.order_user_id=#{userId} AND `order`.order_status=#{status} AND `order`.order_product_id=product.product_id AND `order`.order_target=user.user_id
     </select>
     <select id="queryOrderByTargetId" resultMap="orderMap">
         SELECT user.user_email,user.user_phone,user.user_name,user.user_location,product.product_id,product.product_name,`order`.* FROM product,`order`,user
-         WHERE `order`.order_target=#{targetId} AND `order`.order_product_id=product.product_id AND `order`.order_target=user.user_id
+         WHERE `order`.order_target=#{targetId} AND `order`.order_product_id=product.product_id AND `order`.order_user_id=user.user_id
     </select>
     <select id="queryOrderByTargetIdAndStatus" resultMap="orderMap">
         SELECT user.user_email,user.user_phone,user.user_name,user.user_location,product.product_id,product.product_name,`order`.* FROM product,`order`,user
-         WHERE `order`.order_target=#{targetId} AND `order`.order_status=#{status} AND `order`.order_product_id=product.product_id AND `order`.order_target=user.user_id
+         WHERE `order`.order_target=#{targetId} AND `order`.order_status=#{status} AND `order`.order_product_id=product.product_id AND `order`.order_user_id=user.user_id
     </select>
     <select id="queryTargetId" resultType="java.lang.String">
         SELECT `order`.order_target FROM `order` WHERE order_id=#{id}
