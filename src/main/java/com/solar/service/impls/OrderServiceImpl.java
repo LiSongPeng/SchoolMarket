@@ -91,6 +91,11 @@ public class OrderServiceImpl implements OrderService {
         return new PageInfo<>(list);
     }
 
+    @Override
+    public boolean confirmPay(String orderId) {
+        return orderMapper.payOrder(orderId) > 0;
+    }
+
     @Autowired
     public void setOrderMapper(OrderMapper orderMapper) {
         this.orderMapper = orderMapper;

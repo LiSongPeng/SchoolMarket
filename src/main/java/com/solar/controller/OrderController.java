@@ -46,6 +46,18 @@ public class OrderController {
         }
         return response;
     }
+    @RequestMapping("/confirmPay.do")
+    @ResponseBody
+    public Response confirmPay(@RequestParam("orderId") String orderId) {
+        Response response = new Response();
+        boolean result = orderService.confirmPay(orderId);
+        if (result) {
+            response.setFlag(Response.SUCCESS);
+        } else {
+            response.setFlag(Response.FAIL);
+        }
+        return response;
+    }
 
     @RequestMapping("/confirmFinished.do")
     @ResponseBody

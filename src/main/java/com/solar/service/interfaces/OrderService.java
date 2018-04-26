@@ -75,4 +75,11 @@ public interface OrderService {
      * @return
      */
     PageInfo<Order> getOrdersByTargetIdAndStatus(String targetId, int pageSize, int pageNumber, int status);
+
+    /**
+     * 确认订单支付
+     * @param orderId
+     * @return
+     */
+    boolean confirmPay(String orderId);
 }

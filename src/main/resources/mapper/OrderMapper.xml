@@ -26,6 +26,9 @@
     <update id="finishOrder">
         UPDATE `order` SET order_status=3,order_finish_time=CURRENT_TIMESTAMP() WHERE order_id=#{id}
     </update>
+    <update id="payOrder">
+        UPDATE `order` SET order_status=1 WHERE order_id=#{id}
+    </update>
     <select id="queryOrderByUserId" resultMap="orderMap">
         SELECT user.user_email,user.user_phone,user.user_name,product.product_id,product.product_name,`order`.* FROM product,`order`,user
          WHERE `order`.order_user_id=#{userId} AND `order`.order_product_id=product.product_id AND `order`.order_user_id=user.user_id

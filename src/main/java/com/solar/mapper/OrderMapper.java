@@ -29,4 +29,6 @@ public interface OrderMapper {
     List<Order> queryOrderByTargetIdAndStatus(@Param("targetId") String targetId, @Param("status") int status);
 
     String queryTargetId(@Param("id") String id);
+
+    int payOrder(@Param("id") String id);
 }
