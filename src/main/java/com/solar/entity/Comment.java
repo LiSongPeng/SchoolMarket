@@ -15,7 +15,6 @@ public class Comment {
     private int like;
     private int dislike;
     private int status;
-    private int level;
     private Product product;
     private User user;
 
@@ -84,13 +83,5 @@ public class Comment {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 }

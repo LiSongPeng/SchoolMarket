@@ -24,10 +24,9 @@ public interface ProductService {
      * @param userId
      * @param productId
      * @param content
-     * @param level
      * @return
      */
-    boolean comment(String userId, String productId, String content, int level);
+    boolean comment(String userId, String productId, String content);
 
     /**
      * 查询商品评价

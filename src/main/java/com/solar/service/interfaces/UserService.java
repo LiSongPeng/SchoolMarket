@@ -35,22 +35,6 @@ public interface UserService {
     boolean register(User user);
 
     /**
-     * 给评论点赞
-     *
-     * @param commentId
-     * @return
-     */
-    boolean likeComment(String commentId);
-
-    /**
-     * 给评论踩赞
-     *
-     * @param commentId
-     * @return
-     */
-    boolean disklikeComment(String commentId);
-
-    /**
      * 获取用户
      *
      * @param pageNumber

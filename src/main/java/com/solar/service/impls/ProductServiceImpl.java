@@ -30,8 +30,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean comment(String userId, String productId, String content, int level) {
-        return commentMapper.addComment(UUIDGenerator.getUUID(), content, productId, userId, level) > 0;
+    public boolean comment(String userId, String productId, String content) {
+        return commentMapper.addComment(UUIDGenerator.getUUID(), content, productId, userId) > 0;
     }
 
     @Override

@@ -13,11 +13,7 @@ import java.util.List;
 public interface CommentMapper {
     int addComment(@Param("id") String id, @Param("content") String content,
                    @Param("productId") String productId,
-                   @Param("userId") String userId, @Param("level") int level);
-
-    int increaseLikeById(@Param("id") String commentId);
-
-    int increaseDislikeById(@Param("id") String commentId);
+                   @Param("userId") String userId);
 
     List<Comment> queryComments(@Param("productId") String productId);
 }

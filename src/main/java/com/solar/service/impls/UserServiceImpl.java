@@ -41,16 +41,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean likeComment(String commentId) {
-        return commentMapper.increaseLikeById(commentId) > 0;
-    }
-
-    @Override
-    public boolean disklikeComment(String commentId) {
-        return commentMapper.increaseDislikeById(commentId) > 0;
-    }
-
-    @Override
     public PageInfo<User> getUsers(int pageNumber, int pageSize) {
         PageHelper pageHelper = new PageHelper();
         pageHelper.startPage(pageNumber, pageSize);

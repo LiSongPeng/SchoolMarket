@@ -46,9 +46,8 @@ public class ProductController {
     @ResponseBody
     public Response comment(@RequestParam("userId") String userId,
                             @RequestParam("productId") String productId,
-                            @RequestParam("content") String content,
-                            @RequestParam("level") int level) {
-        boolean result = productService.comment(userId, productId, content, level);
+                            @RequestParam("content") String content) {
+        boolean result = productService.comment(userId, productId, content);
         Response response = new Response();
         if (result) {
             response.setFlag(Response.SUCCESS);

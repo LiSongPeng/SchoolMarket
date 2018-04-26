@@ -28,8 +28,7 @@ public class ProductServiceTest extends BaseJunitTest {
         String userId = "22222222222";
         String productId = "adfadf";
         String content = "Hello world!";
-        int level = 2;
-        Assert.assertTrue(productService.comment(userId, productId, content, level));
+        Assert.assertTrue(productService.comment(userId, productId, content));
     }
 
     @Test

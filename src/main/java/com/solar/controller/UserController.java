@@ -114,32 +114,6 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping("/likeComment.do")
-    @ResponseBody
-    public Response likeComment(@RequestParam("commentId") String commentId) {
-        boolean result = userService.likeComment(commentId);
-        Response response = new Response();
-        if (result) {
-            response.setFlag(Response.SUCCESS);
-        } else {
-            response.setFlag(Response.FAIL);
-        }
-        return response;
-    }
-
-    @RequestMapping("/dislikeComment.do")
-    @ResponseBody
-    public Response dislikeComment(@RequestParam("commentId") String commentId) {
-        boolean result = userService.disklikeComment(commentId);
-        Response response = new Response();
-        if (result) {
-            response.setFlag(Response.SUCCESS);
-        } else {
-            response.setFlag(Response.FAIL);
-        }
-        return response;
-    }
-
     @GetMapping("/getUsers.do")
     @ResponseBody
     public Response<PageInfo<User>> getUsers(@RequestParam("pageSize") int pageSize,

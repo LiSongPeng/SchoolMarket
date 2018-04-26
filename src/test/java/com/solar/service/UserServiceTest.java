@@ -54,16 +54,6 @@ public class UserServiceTest extends BaseJunitTest {
     }
 
     @Test
-    public void testLikeComment() {
-        Assert.assertTrue(userService.likeComment("sdfdsfdssfs"));
-    }
-
-    @Test
-    public void testDisklikeComment() {
-        Assert.assertTrue(userService.disklikeComment("sdfdsfdssfs"));
-    }
-
-    @Test
     public void testGetUsers() {
         int pageNumber = 1;
         int pageSize = 5;
