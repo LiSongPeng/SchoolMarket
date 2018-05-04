@@ -3,7 +3,6 @@ package com.solar.service.impls;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.solar.entity.User;
-import com.solar.mapper.CommentMapper;
 import com.solar.mapper.UserMapper;
 import com.solar.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import java.util.List;
 @Service("userService")
 public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
-    private CommentMapper commentMapper;
 
     @Override
     public User login(String phoneOrEmail, String password) {
@@ -73,8 +71,4 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
-    @Autowired
-    public void setCommentMapper(CommentMapper commentMapper) {
-        this.commentMapper = commentMapper;
-    }
 }
