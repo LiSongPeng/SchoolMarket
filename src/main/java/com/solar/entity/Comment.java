@@ -12,8 +12,6 @@ public class Comment {
     private String id;
     private String content;
     private Date time;
-    private int like;
-    private int dislike;
     private int status;
     private Product product;
     private User user;
@@ -43,22 +41,6 @@ public class Comment {
 
     public void setTime(Date time) {
         this.time = time;
-    }
-
-    public int getLike() {
-        return like;
-    }
-
-    public void setLike(int like) {
-        this.like = like;
-    }
-
-    public int getDislike() {
-        return dislike;
-    }
-
-    public void setDislike(int dislike) {
-        this.dislike = dislike;
     }
 
     public Product getProduct() {
