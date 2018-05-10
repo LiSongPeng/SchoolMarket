@@ -23,8 +23,8 @@
         AND user.user_phone=#{phoneOrEmail} OR user.user_email=#{phoneOrEmail}
     </select>
     <select id="queryPassword" resultType="java.lang.String">
-        SELECT user.user_password FROM user WHERE user.user_identify=#{identify}
-        AND user.user_phone=#{phoneOrEmail} OR user.user_email=#{phoneOrEmail}
+        SELECT user.user_password FROM user WHERE user.user_phone=#{phoneOrEmail}
+         OR user.user_email=#{phoneOrEmail} AND user.user_identify=#{identify}
     </select>
     <update id="updateLastLoginTime">
         UPDATE user SET user.user_last_login_time=CURRENT_TIMESTAMP() WHERE user.user_id=#{id}
